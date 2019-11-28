@@ -1,5 +1,4 @@
-# OpenAPI
-OpenAPI specification for CPaaS REST API
+# OpenAPI specification for CPaaS
 With the OpenAPI specs, we hope to generate not just the documentation, but also libraries that aren't fully functional at the moment.
 
 ## Basic Structure
