@@ -249,5 +249,8 @@ For more information, see Authentication.
 ## Full Specification
 The full OpenAPI 3.0 Specification is available on GitHub: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md
 
+## Full Example
+https://github.com/OAI/OpenAPI-Specification/blob/master/examples/v3.0/petstore.yaml
+
 ## Clipped from:
 https://swagger.io/docs/specification/basic-structure/
