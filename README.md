@@ -29,8 +29,8 @@ paths:
                 type: array
                 items: 
                   type: string
-                  ```
-### All keyword names are case-sensitive.
+```
+All keyword names are case-sensitive.
 
 ## Metadata
 ### Every API definition must include the version of the OpenAPI Specification that this definition is based on:
@@ -47,7 +47,7 @@ info:
   title: Sample API
   description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
   version: 0.1.9
-  ```
+```
 ### title is your API name. description is extended information about your API. It can be multiline and supports the CommonMark dialect of Markdown for rich text representation. HTML is supported to the extent provided by CommonMark (see HTML Blocks in CommonMark 0.27 Specification). version is an arbitrary string that specifies the version of your API (do not confuse it with file revision or the openapi version). You can use semantic versioning like major.minor.patch, or an arbitrary string like 1.0-beta or 2017-07-25. info also supports other keywords for contact information, license, terms of service, and other details.
 
 ## Servers
@@ -59,7 +59,7 @@ servers:
     description: Optional server description, e.g. Main (production) server
   - url: http://staging-api.example.com
     description: Optional server description, e.g. Internal staging server for testing
-    ```
+```
 All API paths are relative to the server URL. In the example above, /users means http://api.example.com/v1/users or http://staging-api.example.com/users, depending on the server used. For more information, see API Server and Base Path.
 ## Paths
 ### The paths section defines individual endpoints (paths) in your API, and the HTTP methods (operations) supported by these endpoints. For example, GET /users can be described as:
@@ -79,7 +79,7 @@ paths:
                 type: array
                 items: 
                   type: string
-                  ```
+```
 An operation definition includes parameters, request body (if any), possible response status codes (such as 200 OK or 404 Not Found) and response contents. For more information, see Paths and Operations.
 ## Parameters
 ### Operations can have parameters passed via URL path (/users/{userId}), query string (/users?role=admin), headers (X-CustomHeader: Value) or cookies (Cookie: debug=0). You can define the parameter data types, format, whether they are required or optional, and other details:
@@ -101,7 +101,7 @@ paths:
       responses: 
         '200':
           description: OK
-          ```
+```
 For more information, see Describing Parameters.
 ## Request Body
 ### If an operation sends a request body, use the requestBody keyword to describe the body content and media type.
@@ -123,7 +123,7 @@ paths:
       responses: 
         '201':
           description: Created
-          ```
+```
 For more information, see Describing Request Body.
 
 ## Responses
@@ -164,7 +164,7 @@ paths:
           description: A user with the specified ID was not found.
         default:
           description: Unexpected error
-          ```
+```
 Note that the response HTTP status codes must be enclosed in quotes: "200" (OpenAPI 2.0 did not require this). For more information, see Describing Responses.
 
 ## Input and Output Models
@@ -193,7 +193,7 @@ components:
      required:  
         - id
         - name
-        ```
+```
 and then referenced in the request body schema and response body schema as follows:
 
 ```yaml 
@@ -225,7 +225,7 @@ paths:
       responses:
         '201':
           description: Created
-          ```
+```
 ## Authentication
 ### The securitySchemes and security keywords are used to describe the authentication methods used in your API.
 
@@ -237,7 +237,7 @@ components:
       scheme: basic
 security:
   - BasicAuth: []
-  ```
+```
 ### Supported authentication methods are
 
 HTTP authentication: Basic, Bearer, and so on.
