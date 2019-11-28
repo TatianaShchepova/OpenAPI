@@ -48,7 +48,7 @@ info:
   description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
   version: 0.1.9
 ```
-### title is your API name. description is extended information about your API. It can be multiline and supports the CommonMark dialect of Markdown for rich text representation. HTML is supported to the extent provided by CommonMark (see HTML Blocks in CommonMark 0.27 Specification). version is an arbitrary string that specifies the version of your API (do not confuse it with file revision or the openapi version). You can use semantic versioning like major.minor.patch, or an arbitrary string like 1.0-beta or 2017-07-25. info also supports other keywords for contact information, license, terms of service, and other details.
+Title is your API name. description is extended information about your API. It can be multiline and supports the CommonMark dialect of Markdown for rich text representation. HTML is supported to the extent provided by CommonMark (see HTML Blocks in CommonMark 0.27 Specification). version is an arbitrary string that specifies the version of your API (do not confuse it with file revision or the openapi version). You can use semantic versioning like major.minor.patch, or an arbitrary string like 1.0-beta or 2017-07-25. info also supports other keywords for contact information, license, terms of service, and other details.
 
 ## Servers
 ### The servers section specifies the API server and base URL. You can define one or several servers, such as production and sandbox.
