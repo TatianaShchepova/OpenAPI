@@ -28,7 +28,7 @@ paths:
               schema: 
                 type: array
                 items: 
-                  type: string```
+                  type: string ```
 ### All keyword names are case-sensitive.
 
 ## Metadata
