@@ -1,0 +1,380 @@
+openapi: 3.0.0
+
+info:
+  title: Avaya Onecloud CPaaS
+  description: Make communications happen anywhere
+  version: "2.0"
+
+servers:
+  - url: https://api.zang.io/v2
+    description: Production server
+
+paths:
+  "/Accounts/{AccountSid}/Transcriptions/{TranscriptionSid}{mediaTypeExtension}":
+    get:
+      summary: "shows info on all transcriptions associated with some account"
+      tags:
+      - Transcriptions
+
+      parameters:
+        - $ref: '#/components/parameters/TranscriptionSid'
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Status'
+        - $ref: '#/components/parameters/DateTranscribed'
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transcription'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  "/Accounts/{AccountSid}/Transcriptions{mediaTypeExtension}":
+    get:
+      summary: "shows info on all transcriptions associated with some account"
+      tags:
+      - Transcriptions
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Status'
+        - $ref: '#/components/parameters/DateTranscribed'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/transc200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+    post:
+      summary: "transcribes some recording"
+      tags:
+      - Transcriptions
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transcription'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+      requestBody:
+        required: false
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - AudioUrl
+              properties:
+                AudioUrl:
+                  type: string
+                  description: URL where the audio to be transcribed is located
+                TranscribeCallback:
+                  type: string
+                  description: The URL some parameters regarding the transcription will be passed to once it is completed. The longer the recording time, the longer the process delay in returning the transcription information. If no TranscribeCallback is given, the recording will still be saved to the system and available either in your Transcriptions Logs or via a REST List Transcriptions (ADD URL LINK) request. URL length is limited to 200 characters.
+                CallbackMethod:
+                  type: string
+                  description: The HTTP method used to request the TranscribeCallback. Valid parameters are GET and POST - any other value will default to POST.
+                SliceStart:
+                  type: integer
+                  description: Start point for slice transcription (in seconds).
+                SliceDuration:
+                  type: integer
+                  description: Duration of slice transcription (in seconds).
+                Quality:
+                  type: string
+                  description: Specifies the transcription quality. Transcription price differs for each quality tier. See pricing page for details. Allowed values are "auto", "hybrid" and "keywords", where "auto" is a machine-generated transcription, "hybrid" is reviewed by a human for accuracy and "keywords" returns topics and keywords for given audio file.
+
+  "/Accounts/{AccountSid}/Recordings/{RecordingSid}/Transcriptions{mediaTypeExtension}":
+    post:
+      summary: "transcribes some recording"
+      tags:
+      - Transcriptions
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/RecordingSid'
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transcription'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+      requestBody:
+        required: false
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                TranscribeCallback:
+                  type: string
+                  description: The URL some parameters regarding the transcription will be passed to once it is completed. The longer the recording time, the longer the process delay in returning the transcription information. If no TranscribeCallback is given, the recording will still be saved to the system and available either in your Transcriptions Logs or via a REST List Transcriptions (ADD URL LINK) request. URL length is limited to 200 characters.
+                CallbackMethod:
+                  type: string
+                  description: The HTTP method used to request the TranscribeCallback. Valid parameters are GET and POST - any other value will default to POST.
+                SliceStart:
+                  type: integer
+                  description: Start point for slice transcription (in seconds).
+                SliceDuration:
+                  type: integer
+                  description: Duration of slice transcription (in seconds).
+                Quality:
+                  type: string
+                  description: Specifies the transcription quality. Transcription price differs for each quality tier. See pricing page for details. Allowed values are "auto", "hybrid" and "keywords", where "auto" is a machine-generated transcription, "hybrid" is reviewed by a human for accuracy and "keywords" returns topics and keywords for given audio file.
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+  parameters:
+    RecordingSid:
+      in: path
+      name: RecordingSid
+      description: >
+            Recording SID.
+      schema:
+        type: string
+      required: true
+    TranscriptionSid:
+      in: path
+      name: TranscriptionSid
+      description: >
+            Transcription SID.
+      schema:
+        type: string
+      required: true
+    PageSize:
+      in: query
+      name: PageSize
+      description: >
+            Used to specify the amount of list items to return per page.
+      schema:
+        type: integer
+      required: false
+    Page:
+      in: query
+      name: Page
+      description: >
+            Used to return a particular page within the list.
+      schema:
+        type: integer
+      required: false
+
+    MediaExt:
+      description: >
+            By default, Avaya's REST API returns XML. You may obtain CSV, JSON
+            or HTML by appending ".csv", ".json", or ".html".
+      in: path
+      name: mediaTypeExtension
+      required: true
+      schema:
+        type: string
+        enum:
+          - .xml
+          - .json
+          - .csv
+          - .html
+        default: .xml
+    AccSid:
+      name: AccountSid
+      description: >
+            Your Account Sid
+      in: path
+      required: true
+      schema:
+        type: string
+
+    CountryCode:
+      name: CountryCode
+      description: >
+            Country Code
+      in: path
+      required: true
+      schema:
+        type: string
+    DateTranscribed:
+      name: DateTranscribed
+      description: >
+            Lists all transcriptions created on or after a certain date. Date range can be specified using inequalities like so: DateSent=>YYYY-MM-DD.
+      in: query
+      required: false
+      schema:
+        type: string
+    Status:
+      name: Status
+      description: >
+            Filter by transcriptions with a given status. Allowed values are "completed", "in-progress", and "failed".
+      in: query
+      required: false
+      schema:
+        type: string
+
+  schemas:
+    transcription:
+      type: object
+      description: Object containing transcription information
+      properties:
+        sid:
+          description: An alphanumeric string identifying this resource.
+          example: TranscriptionSid
+          type: string
+        date_created:
+          description: The date the transcription resource was created.
+          example: Thu, 30 Oct 2014 08:35:27 -0000
+          type: string
+        date_transcribed:
+          description: The date the transcription resource was done.
+          example: Thu, 30 Oct 2014 08:35:27 -0000
+          type: string
+        date_updated:
+          description: The date the transcription resource was last updated.
+          example: Thu, 30 Oct 2014 08:35:27 -0000
+          type: string
+        account_sid:
+          description: An alphanumeric string identifying the account this lookup occurred through.
+          example: AccountSid
+          type: string
+        status:
+          description: Status of the transcription. May be in-progress, completed, or failed.
+          example: completed
+          type: string
+        type:
+          description: Transcription quality tier. May be auto or hybrid. Default is auto.
+          example: auto
+          type: string
+        audio_url:
+          description: URL where a file containing the transcribed audio is located.
+          example: http://recordings.example.com/recording.mp3
+          type: string
+        duration:
+          description: Length in seconds of the transcribed recording.
+          example: 8
+          type: integer
+        transcription_text:
+          description: Text of the transcribed audio.
+          example: Transcription Testing
+          type: string
+        api_version:
+          description: The API version being used when the carrier lookup was made.
+          example: v2
+          type: string
+        price:
+          description: Cost of the transcription.
+          example: $0.05
+          type: string
+        transcribe_callback:
+          description: URL where transcription will report to after completion.
+          example: http://webhook.com/test
+          type: string
+        callback_method:
+          description: Method to request TranscribeCallback URL. May be POST or GET. Default is POST.
+          example: POST
+          type: string
+        uri:
+          description: The Uniform Resource Identifier to this resource.
+          example: /v2/Accounts/{AccountSid}/Transcriptions
+          type: string
+  responses:
+    transc200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              page:
+                type: integer
+                description: Current page number.
+              page_size:
+                type: integer
+                description: Number of items on a single page.
+              num_pages:
+                type: integer
+                description: Number of pages.
+              start:
+                type: integer
+                description: Index of the first item on the current page.
+              total:
+                type: integer
+                description: Number of items.
+              end:
+                type: integer
+                description: Last result index.
+              uri:
+                type: string
+                description: The Uniform Resource Identifier to this resource.
+              first_page_uri:
+                type: string
+                description: URI for the first page of results.
+              last_page_uri:
+                type: string
+                description: URI for the last page of the results.
+              next_page_uri:
+                type: string
+                description: URI for the next page of the results.
+              previous_page_uri:
+                type: string
+                description: URI for the previous page of results.
+              transcriptions:
+                type: array
+                description: Array containing Transcriptions.
+                items:
+                  $ref: '#/components/schemas/transcription'
+    400:
+      description: Bad Request
+    401:
+      description: The supplied credentials, if any, are not sufficient to access the resource.
+    404:
+      description: The requested resource was not found
+    500:
+      description: Internal server error.

@@ -1,0 +1,355 @@
+openapi: 3.0.0
+
+info:
+  title: Avaya Onecloud CPaaS
+  description: Make communications happen anywhere
+  version: "2.0"
+
+servers:
+  - url: https://api.zang.io/v2
+    description: Production server
+
+paths:
+  "/Accounts/{AccountSid}/Fraud{mediaTypeExtension}":
+    get:
+      summary: Returns whitelisted, blocked, and authorized destinations
+      tags:
+        - Fraud Control
+        
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/SmsEnabled'
+        
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  first_page_uri:
+                    type: string
+                    description: URI for the first page of results.
+                  end:
+                    type: integer
+                    description: Last result index.
+                  total:
+                    type: integer
+                    description: Number of items.
+                  previous_page_uri:
+                    type: string
+                    description: URI for the previous page of results.
+                  num_pages:
+                    type: integer
+                    description: Number of pages.
+                  uri:
+                    type: string
+                    description: The Uniform Resource Identifier to this resource.
+                  page_size:
+                    type: integer
+                    description: Number of items on a single page.
+                  start:
+                    type: integer
+                    description: Index of the first item on the current page.
+                  next_page_uri:
+                    type: string
+                    description: URI for the next page of the results.
+                  last_page_uri:
+                    type: string
+                    description: URI for the last page of the results.
+                  page:
+                    type: integer
+                    description: Current page number.
+                  frauds:
+                    type: array
+                    description: Array containing fraud control resources.
+                    items:
+                      properties:
+                        whitelisted:
+                          $ref: '#/components/schemas/Fraudlist'
+                        authorized:
+                          $ref: '#/components/schemas/Fraudlist'
+                        blocked:
+                          $ref: '#/components/schemas/Fraudlist'
+                        
+                    
+                
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+          
+  "/Accounts/{AccountSid}/Fraud/Extend/{CountryCode}{mediaTypeExtension}":     
+    post:
+      summary: extends a destinations authorization expiration by 30 days
+      tags:
+        - Fraud Control
+              
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/CountryCode'
+        - $ref: '#/components/parameters/SmsEnabled'
+        - $ref: '#/components/parameters/MobileEnabled'
+        - $ref: '#/components/parameters/LandlineEnabled'
+        
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  authorized:
+                    $ref: '#/components/schemas/Fraudlist'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  
+  "/Accounts/{AccountSid}/Fraud/Whitelist/{CountryCode}{mediaTypeExtension}":
+    post:
+      summary: permanently authorizes destination that may have been blocked by our automated fraud detection system
+      tags:
+        - Fraud Control
+              
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/CountryCode'
+        - $ref: '#/components/parameters/SmsEnabled'
+        - $ref: '#/components/parameters/MobileEnabled'
+        - $ref: '#/components/parameters/LandlineEnabled'
+        
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  whitelisted:
+                    $ref: '#/components/schemas/Fraudlist'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  "/Accounts/{AccountSid}/Fraud/Authorize/{CountryCode}{mediaTypeExtension}":
+    post:
+      summary: authorizes previously blocked destination for outbound calls and sms messages
+      tags:
+        - Fraud Control
+              
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/CountryCode'
+        - $ref: '#/components/parameters/SmsEnabled'
+        - $ref: '#/components/parameters/MobileEnabled'
+        - $ref: '#/components/parameters/LandlineEnabled'
+        
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  authorized:
+                    $ref: '#/components/schemas/Fraudlist'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+          
+  "/Accounts/{AccountSid}/Fraud/Block/{CountryCode}{mediaTypeExtension}":
+    post:
+      summary: restricts outbound calls and sms messages to some destination
+      tags:
+        - Fraud Control
+              
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/CountryCode'
+        - $ref: '#/components/parameters/SmsEnabled'
+        - $ref: '#/components/parameters/MobileEnabled'
+        - $ref: '#/components/parameters/LandlineEnabled'
+        
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  blocked:
+                    $ref: '#/components/schemas/Fraudlist'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      
+  parameters:
+    MobileEnabled:
+      in: query
+      name: MobileEnabled
+      description: >
+            Mobile status for the destination. If false, all mobile call activity will be rejected or disabled. Allowed values are "true" and "false".
+      schema:
+        type: boolean
+      required: false
+      
+    LandlineEnabled:
+      in: query
+      name: LandlineEnabled
+      description: >
+            Landline status for the destination. If false, all landline call activity will be rejected or disabled. Allowed values are "true" and "false".
+      schema:
+        type: boolean
+      required: false
+  
+    SmsEnabled:
+      in: query
+      name: SmsEnabled
+      description: >
+            SMS status for the destination. If false, all SMS activity will be rejected or disabled. Allowed values are "true" and "false".
+      schema:
+        type: boolean
+      required: false
+      
+    PageSize:
+      in: query
+      name: PageSize
+      description: >
+            Used to specify the amount of list items to return per page.
+      schema:
+        type: integer
+      required: false
+  
+    Page:
+      in: query
+      name: Page
+      description: >
+            Used to return a particular page within the list.
+      schema:
+        type: integer
+      required: false
+      
+    MediaExt:
+      description: >
+            By default, Avaya's REST API returns XML. You may obtain CSV, JSON
+            or HTML by appending ".csv", ".json", or ".html".
+      in: path
+      name: mediaTypeExtension
+      required: true
+      schema:
+        type: string
+        enum:
+          - .xml
+          - .json
+          - .csv
+          - .html
+        default: .xml
+        
+    AccSid:
+      name: AccountSid
+      description: >
+            Your Account Sid
+      in: path
+      required: true
+      schema:
+        type: string
+        
+    CountryCode:
+      name: CountryCode
+      description: >
+            Country Code
+      in: path
+      required: true
+      schema:
+        type: string
+        
+  schemas:
+    Fraudlist:
+      type: object
+      description: Object containing information on fraud control resource
+      properties:
+        max_outbound_rate:
+          type: string
+          description: The price limit an outbound call may be. Calls which cost more will be rejected.
+        country_name:
+          type: string
+          description: Full name of the destination being whitelisted, authorized or blocked.
+        country_code:
+          type: string
+          description: Two letter country code being whitelisted, authorized or blocked.
+        country_prefix:
+          type: string
+          description: Prefix of the destination being whitelisted, authorized or   blocked.
+        mobile_enabled:
+          type: boolean
+          description: Mobile status for the destination. If false, all mobile call activity will be rejected or disabled.
+        landline_enabled:
+          type: boolean
+          description: Landline status for the destination. If false, all landline call activity will be rejected or disabled.
+        sms_enabled:
+          type: boolean
+          description: Status of the SMS for destination. Can be true or false. If false, SMS for same destination will be rejected.
+        date_created:
+          type: string
+          description: The date the fraud control resource was created.
+        date_updated:
+          type: string
+          description: The date the fraud control resource was last updated.
+        expiration_date:
+          type: string
+          description: The date the fraud control resource will expire.
+        is_lock:
+          type: boolean
+          description: Specifies whether the destinations permission state (blocked, whitelisted, etc.) has been locked by our system. Currently, the US is locked as a whitelisted destination.
+          
+  responses:
+    400:
+      description: Bad Request
+    401:
+      description: The supplied credentials, if any, are not sufficient to access the resource.
+    404:
+      description: The requested resource was not found
+    500:
+      description: Internal server error.

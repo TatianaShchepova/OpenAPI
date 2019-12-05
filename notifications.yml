@@ -1,0 +1,258 @@
+openapi: 3.0.0
+
+info:
+  title: Avaya Onecloud CPaaS
+  description: Make communications happen anywhere
+  version: "2.0"
+
+servers:
+  - url: https://api.zang.io/v2
+    description: Production server
+
+paths:
+  "/Accounts/{AccountSid}/Notifications{mediaTypeExtension}":
+    get:
+      summary: "shows info on all notifications associated with some account"
+      tags:
+      - Notifications
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Log'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/noti200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  "/Accounts/{AccountSid}/Notifications/{NotificationSid}{mediaTypeExtension}":
+    get:
+      summary: "shows info on all notifications associated with some account"
+      tags:
+      - Notifications
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/NotiSid'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Log'
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notification'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+  parameters:
+    PageSize:
+      in: query
+      name: PageSize
+      description: >
+            Used to specify the amount of list items to return per page.
+      schema:
+        type: integer
+      required: false
+    Page:
+      in: query
+      name: Page
+      description: >
+            Used to return a particular page within the list.
+      schema:
+        type: integer
+      required: false
+    AccSid:
+      name: AccountSid
+      description: >
+            Your Account Sid
+      in: path
+      required: true
+      schema:
+        type: string
+    NotiSid:
+      name: NotificationSid
+      description: >
+            Notification Sid
+      in: path
+      required: true
+      schema:
+        type: string
+    MediaExt:
+      description: >
+            By default, Avaya's REST API returns XML. You may obtain CSV, JSON
+            or HTML by appending ".csv", ".json", or ".html".
+      in: path
+      name: mediaTypeExtension
+      required: true
+      schema:
+        type: string
+        enum:
+          - .xml
+          - .json
+          - .csv
+          - .html
+        default: .xml
+    Log:
+      name: Log
+      description: >
+            Specifies that only notifications with the given log level value should be listed. Allowed values are 1,2 or 3, where 2=INFO, 1=WARNING, 0=ERROR.
+      in: query
+      required: false
+      schema:
+        type: integer
+
+  schemas:
+    notification:
+      type: object
+      description: Object containing information on available phone numbers
+      properties:
+        log:
+          description: Specifies the notification log level 2=INFO, 1=WARNING, 0=ERROR.
+          example: 0
+          type: integer
+        response_headers:
+          description: The date the transcription resource was created.
+          example: true
+          type: boolean
+        request_method:
+          description: Code used to identify the phone numbers geographic origin. Found at the beginning of the number.
+          example: +1
+          type: string
+        date_updated:
+          description: Cost of phone number per month.
+          example: 1.00
+          type: string
+        message_text:
+          description: Type of phone number (local or tollfree).
+          example: local
+          type: string
+        request_variables:
+          description: Does phone number support forwarded from? Can be true or false.
+          example: true
+          type: boolean
+        uri:
+          description: The E.164 format number of each available number.
+          example: +19051111111
+          type: string
+        account_sid:
+          description: The available phone numbers rate center.
+          example: Bridgewater
+          type: string
+        message_date:
+          description: Three digits following the NPA (area code) in the available number.
+          example: 111
+          type: string
+        response_body:
+          description: Numbering Plan Area of the available number. This is more commonly known as the area code.
+          example: 905
+          type: string
+        call_sid:
+          description: Is MMS enabled for this phone number? Can be true or false.
+          example: true
+          type: boolean
+        sid:
+          description: Cost of calls per minute
+          example: 0.05
+          type: string
+        date_created:
+          description: Is voice enabled for this phone number? Can be true or false.
+          example: true
+          type: boolean
+        request_url:
+          description: The region of the available phone number. Usually a two letter abbreviation.
+          example: CA
+          type: string
+        error_code:
+          description: Domestic format version of the available phone number.
+          example: (905) 111-1111
+          type: string
+        api_version:
+          description: Two letter country code of the available phone number.
+          example: US
+          type: string
+        more_info:
+          description: Two letter country code of the available phone number.
+          example: US
+          type: string
+  responses:
+    noti200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              first_page_uri:
+                type: string
+                description: URI for the first page of results.
+              available_phone_numbers:
+                type: array
+                description: Array containing information on available phone numbers.
+                items:
+                  $ref: '#/components/schemas/notification'
+              end:
+                type: integer
+                description: Last result index.
+              total:
+                type: integer
+                description: Number of items.
+              previous_page_uri:
+                type: string
+                description: URI for the previous page of results.
+              num_pages:
+                type: integer
+                description: Number of pages.
+              uri:
+                type: string
+                description: The Uniform Resource Identifier to this resource.
+              page_size:
+                type: integer
+                description: Number of items on a single page.
+              start:
+                type: integer
+                description: Index of the first item on the current page.
+              next_page_uri:
+                type: string
+                description: URI for the next page of the results.
+              last_page_uri:
+                type: string
+                description: URI for the last page of the results.
+              page:
+                type: integer
+                description: Current page number.
+
+
+    400:
+      description: Bad Request
+    401:
+      description: The supplied credentials, if any, are not sufficient to access the resource.
+    404:
+      description: The requested resource was not found
+    500:
+      description: Internal server error.
