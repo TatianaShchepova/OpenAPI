@@ -12,6 +12,7 @@ servers:
 paths:
   "/Accounts/{AccountSid}/Lookups/Carrier{mediaTypeExtension}":
     post:
+      description: Carrier Lookup
       summary: "shows information on billing name address for some phone number"
       tags:
       - Carrier Services
@@ -42,6 +43,7 @@ paths:
                   type: string
                   description: Phone Number
     get:
+      description: Carrier Lookup
       summary: "shows info on all carrier lookups associated with some account"
       tags:
       - Carrier Services
@@ -66,7 +68,8 @@ paths:
 
   "/Accounts/{AccountSid}/Lookups/Cnam{mediaTypeExtension}":
     post:
-      summary: "shows information on billing name address for some phone number"
+      description: CNAM Lookup
+      summary: "shows a CNAM information on some phone number"
       tags:
       - Carrier Services
 
@@ -96,6 +99,7 @@ paths:
                   type: string
                   description: Phone Number
     get:
+      description: CNAM Lookup List
       summary: shows info on all CNAM lookups associated with some account
       tags:
       - Carrier Services
@@ -120,6 +124,7 @@ paths:
 
   "/Accounts/{AccountSid}/Lookups/Bna{mediaTypeExtension}":
     post:
+      description: BNA Lookup
       summary: "shows information on billing name address for some phone number"
       tags:
       - Carrier Services
@@ -150,6 +155,7 @@ paths:
                   type: string
                   description: Phone Number
     get:
+      description: BNA Lookup List
       summary: shows info on all BNA lookups associated with some account
       tags:
       - Carrier Services

@@ -1,0 +1,516 @@
+openapi: 3.0.0
+
+info:
+  title: Avaya Onecloud CPaaS
+  description: Make communications happen anywhere
+  version: "2.0"
+
+servers:
+  - url: https://api.zang.io/v2
+    description: Production server
+
+paths:
+  "/v2/Accounts/{AccountSid}/IncomingPhoneNumbers/{IncomingNumberSid}{mediaTypeExtension}":
+    get:
+      description: View Number
+      summary: "shows info on an incoming phone number"
+      tags:
+      - Incoming Phone Numbers
+      
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/IncomingSid'
+      
+      responses:
+        '200':
+          $ref: '#/components/responses/viewnum200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      description: Update Number
+      summary: "updates an incoming phone number data"
+      tags:
+      - Incoming Phone Numbers
+      
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/IncomingSid'
+      
+      responses:
+        '200':
+          $ref: '#/components/responses/viewnum200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+          
+      requestBody:
+        required: false
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                FriendlyName:
+                  type: string
+                  description: User generated name for the incoming number.
+                VoiceUrl:
+                  type: string
+                  description: The URL returning InboundXML incoming calls should execute when connected.
+                VoiceMethod:
+                  type: string
+                  description: Specifies the HTTP method used to request the VoiceUrl once incoming call connects.
+                VoiceFallbackUrl:
+                  type: string
+                  description: URL used if any errors occur during execution of InboundXML on a call or at initial request of the VoiceUrl.
+                VoiceFallbackMethod:
+                  type: string
+                  description: Specifies the HTTP method used to request the VoiceFallbackUrl once incoming call connects.
+                VoiceCallerIdLookup:
+                  type: string
+                  description: Look up the caller’s caller-ID name from the CNAM database (additional charges apply).
+                SmsUrl:
+                  type: string
+                  description: The URL returning InboundXML incoming phone numbers should execute when receiving an SMS.
+                SmsMethod:
+                  type: string
+                  description: Specifies the HTTP method used to request the SmsUrl once an incoming SMS is received.
+                SmsFallbackUrl:
+                  type: string
+                  description: URL used if any errors occur during execution of InboundXML from an SMS or at initial request of the SmsUrl.
+                SmsFallbackMethod:
+                  type: string
+                  description: Specifies the HTTP method used to request the SmsFallbackUrl.
+                HeartbeatUrl:
+                  type: string
+                  description: URL that can be used to monitor the phone number.
+                HeartbeatMethod:
+                  type: string
+                  description: The HTTP method Avaya CPaaS will use when requesting the HeartbeatURL.
+                StatusCallback:
+                  type: string
+                  description: URL that can be requested to receive notification when and how incoming call has ended.
+                StatusCallbackMethod:
+                  type: string
+                  description: The HTTP method Avaya CPaaS will use when requesting the HangupCallback URL.
+                HangupCallback:
+                  type: string
+                  description: This is a StatusCallback clone that will be phased out in future versions.
+                HangupCallbackMethod:
+                  type: string
+                  description: This is a StatusCallbackMethod clone that will be phased out in future versions.
+                VoiceApplicationSid:
+                  type: string
+                  description: The SID of the Voice Application you wish to associate with this incoming number.
+                SmsApplicationSid:
+                  type: string
+                  description: The SID of the SMS Application you wish to associate with this incoming number.
+                MmsApplicationSid:
+                  type: string
+                  description: The SID of the MMS Application you wish to associate with this incoming number.
+    delete:
+      description: Delete Number
+      summary: "deletes an incoming phone number"
+      tags:
+      - Incoming Phone Numbers
+      
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/IncomingSid'
+      
+      responses:
+        '200':
+          $ref: '#/components/responses/viewnum200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    
+          
+  "/v2/Accounts/{AccountSid}/IncomingPhoneNumbers{mediaTypeExtension}":
+    get:
+      description: List Numbers
+      summary: "shows info on all incoming numbers associated with some account"
+      tags:
+      - Incoming Phone Numbers
+      
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/Contains'
+        - $ref: '#/components/parameters/FriendlyName'
+      
+      responses:
+        '200':
+          $ref: '#/components/responses/viewnum200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      description: Add Number
+      summary: "purchases a new incoming number"
+      tags:
+      - Incoming Phone Numbers
+      
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+      
+      responses:
+        '200':
+          $ref: '#/components/responses/viewnum200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+          
+      requestBody:
+        required: false
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                AreaCode:
+                  type: integer
+                  description: The area code from which a random available number will be added. One of AreaCode or PhoneNumber is required.
+                PhoneNumber:
+                  type: string
+                  description: The available phone number (E164 Format) will be added. One of AreaCode or PhoneNumber is required.
+                FriendlyName:
+                  type: string
+                  description: User generated name for the incoming number.
+                VoiceUrl:
+                  type: string
+                  description: The URL returning InboundXML incoming calls should execute when connected.
+                VoiceMethod:
+                  type: string
+                  description: Specifies the HTTP method used to request the VoiceUrl once incoming call connects.
+                VoiceFallbackUrl:
+                  type: string
+                  description: URL used if any errors occur during execution of InboundXML on a call or at initial request of the VoiceUrl.
+                VoiceFallbackMethod:
+                  type: string
+                  description: Specifies the HTTP method used to request the VoiceFallbackUrl once incoming call connects.
+                VoiceCallerIdLookup:
+                  type: string
+                  description: Look up the caller’s caller-ID name from the CNAM database (additional charges apply).
+                SmsUrl:
+                  type: string
+                  description: The URL returning InboundXML incoming phone numbers should execute when receiving an SMS.
+                SmsMethod:
+                  type: string
+                  description: Specifies the HTTP method used to request the SmsUrl once an incoming SMS is received.
+                SmsFallbackUrl:
+                  type: string
+                  description: URL used if any errors occur during execution of InboundXML from an SMS or at initial request of the SmsUrl.
+                SmsFallbackMethod:
+                  type: string
+                  description: Specifies the HTTP method used to request the SmsFallbackUrl.
+                HeartbeatUrl:
+                  type: string
+                  description: URL that can be used to monitor the phone number.
+                HeartbeatMethod:
+                  type: string
+                  description: The HTTP method Avaya CPaaS will use when requesting the HeartbeatURL.
+                StatusCallback:
+                  type: string
+                  description: URL that can be requested to receive notification when and how incoming call has ended.
+                StatusCallbackMethod:
+                  type: string
+                  description: The HTTP method Avaya CPaaS will use when requesting the HangupCallback URL.
+                HangupCallback:
+                  type: string
+                  description: This is a StatusCallback clone that will be phased out in future versions.
+                HangupCallbackMethod:
+                  type: string
+                  description: This is a StatusCallbackMethod clone that will be phased out in future versions.
+                VoiceApplicationSid:
+                  type: string
+                  description: The SID of the Voice Application you wish to associate with this incoming number.
+                SmsApplicationSid:
+                  type: string
+                  description: The SID of the SMS Application you wish to associate with this incoming number.
+                MmsApplicationSid:
+                  type: string
+                  description: The SID of the MMS Application you wish to associate with this incoming number.
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      
+  parameters:
+    IncomingSid:
+      in: path
+      name: IncomingNumberSid
+      description: >
+            Incoming Number Sid.
+      schema:
+        type: string
+      required: true
+    PageSize:
+      in: query
+      name: PageSize
+      description: >
+            Used to specify the amount of list items to return per page.
+      schema:
+        type: integer
+      required: false
+    Page:
+      in: query
+      name: Page
+      description: >
+            Used to return a particular page within the list.
+      schema:
+        type: integer
+      required: false
+    AccSid:
+      name: AccountSid
+      description: >
+            Your Account Sid
+      in: path
+      required: true
+      schema:
+        type: string
+    Contains:
+      name: Contains
+      description: >
+            List numbers containing certain digits.
+      in: query
+      required: false
+      schema:
+        type: string
+    FriendlyName:
+      name: FriendlyName
+      description: >
+            Specifies that only IncomingPhoneNumber resources matching the input FriendlyName should be returned in the list request.
+      in: query
+      required: false
+      schema:
+        type: string
+    MediaExt:
+      description: >
+            By default, Avaya's REST API returns XML. You may obtain CSV, JSON
+            or HTML by appending ".csv", ".json", or ".html".
+      in: path
+      name: mediaTypeExtension
+      required: true
+      schema:
+        type: string
+        enum:
+          - .xml
+          - .json
+          - .csv
+          - .html
+        default: .xml
+    DateCreated:
+      name: DateCreated
+      description: >
+            Lists all recordings created on or after a certain date. Date range can be specified using inequalities like so: DateCreated=>YYYY-MM-DD.
+      in: query
+      required: false
+      schema:
+        type: integer
+
+  schemas:
+    viewnumber:
+      type: object
+      description: The features available with this incoming phone number. The Elements voice and sms are nested within this property with their values as either True or False depending on what the number is capable of.
+      properties:
+        voice:
+          description: Voice capability
+          example: true
+          type: boolean
+        sms:
+          description: SMS capability
+          example: true
+          type: boolean
+        mms:
+          description: MMS capability
+          example: true
+          type: boolean
+    viewnum:
+      type: object
+      properties:
+        mms_url:
+          type: string
+          description: The URL returning InboundXML incoming phone numbers should execute when receiving an mms.
+        date_updated:
+          type: string
+          description: The date the number was last updated.
+        mms_method:
+          type: string
+          description: The HTTP method used when making requests to the MmsUrl. Either GET or POST.
+        voice_url:
+          type: string
+          description: The URL returning InboundXML incoming phone numbers should execute when receiving a call.
+        voice_fallback_method:
+          type: string
+          description: Specifies the HTTP method (GET or POST) used to request the VoiceFallbackUrl.
+        capabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/viewnumber'
+        mms_fallback_method:
+          type: string
+          description: Specifies the HTTP method (GET or POST) used to request the MmsFallbackUrl.
+        sid:
+          type: string
+          description: An alphanumeric string identifying this resource.
+        heartbeat_method:
+          type: string
+          description: The HTTP method Avaya CPaaS will use when requesting the HeartbeatURL. Either GET or POST.
+        mms_fallback_url:
+          type: string
+          description: URL used if any errors occur during execution of InboundXML from an sms or at initial request of the MmsUrl.
+        status_callback_method:
+          type: string
+          description: URI for the last page of the results.
+        voice_fallback_url:
+          type: string
+          description: URL used if any errors occur during execution of InboundXML from an sms or at initial request of the VoiceUrl.
+        phone_number:
+          type: string
+          description: The phone number.
+        hangup_callback:
+          type: string
+          description: This is a StatusCallback clone that will be phased out in future versions.
+        hangup_callback_method:
+          type: string
+          description: This is a StatusCallbackMethod clone that will be phased out in future versions.
+        heartbeat_url:
+          type: string
+          description: URL that can be used to monitor the phone number.
+        sms_url:
+          type: string
+          description: The URL returning InboundXML incoming phone numbers should execute when receiving an sms.
+        voice_method:
+          type: string
+          description: The HTTP method used when making requests to the VoiceUrl. Either GET or POST.
+        type:
+          type: string
+          description: The type of Avaya CPaaS number (local, international, etc.).
+        voice_caller_id_lookup:
+          type: string
+          description: Specifies if the incoming number has voice caller ID lookup enabled.
+        friendly_name:
+          type: string
+          description: A human-readable name associated with this domain.
+        uri:
+          type: string
+          description: The Uniform Resource Identifier to this resource.
+        sms_fallback_url:
+          type: string
+          description: URL used if any errors occur during execution of InboundXML from an sms or at initial request of the SmsUrl.
+        account_sid:
+          type: string
+          description: An alphanumeric string identifying the account associated with this resource.
+        sms_method:
+          type: string
+          description: The HTTP method used when making requests to the SmsUrl. Either GET or POST.
+        api_version:
+          type: string
+          description: The API version used with this incoming number.
+        sms_fallback_method:
+          type: string
+          description: Specifies the HTTP method (GET or POST) used to request the SmsFallbackUrl.
+        next_renewal_date:
+          type: string
+          description: The date of the next renewal date for this number.
+        date_created:
+          type: string
+          description: The date the number was procured by Avaya.
+        status_callback:
+          type: string
+          description: URI for the next page of the results.
+          
+  responses:
+    viewnum200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/viewnum'
+            
+    listnum200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              first_page_uri:
+                type: string
+                description: URI for the first page of results.
+              end:
+                type: integer
+                description: Last result index.
+              total:
+                type: integer
+                description: Number of items.
+              previous_page_uri:
+                type: string
+                description: URI for the previous page of results.
+              num_pages:
+                type: integer
+                description: Number of pages.
+              incoming_phone_numbers:
+                type: array
+                description: Array containing phone numbers.
+                items:
+                  $ref: '#/components/schemas/viewnum'
+              uri:
+                type: string
+                description: The Uniform Resource Identifier to this resource.
+              page_size:
+                type: integer
+                description: Number of items on a single page.
+              start:
+                type: integer
+                description: Index of the first item on the current page.
+              next_page_uri:
+                type: string
+                description: URI for the next page of the results.
+              last_page_uri:
+                type: string
+                description: URI for the last page of the results.
+              page:
+                type: integer
+                description: Current page number.
+              
+    400:
+      description: Bad Request
+    401:
+      description: The supplied credentials, if any, are not sufficient to access the resource.
+    404:
+      description: The requested resource was not found
+    500:
+      description: Internal server error.

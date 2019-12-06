@@ -12,6 +12,7 @@ servers:
 paths:
   "/Accounts/{AccountSid}/AvailablePhoneNumbers/{Country}/{Type}{mediaTypeExtension}":
     get:
+      description: List Available Numbers
       summary: "shows info on all transcriptions associated with some account"
       tags:
       - AvailablePhoneNumbers

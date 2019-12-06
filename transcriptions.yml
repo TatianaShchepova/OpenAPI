@@ -12,6 +12,7 @@ servers:
 paths:
   "/Accounts/{AccountSid}/Transcriptions/{TranscriptionSid}{mediaTypeExtension}":
     get:
+      description: View Transcription
       summary: "shows info on all transcriptions associated with some account"
       tags:
       - Transcriptions
@@ -43,6 +44,7 @@ paths:
 
   "/Accounts/{AccountSid}/Transcriptions{mediaTypeExtension}":
     get:
+      description: List Transcriptions
       summary: "shows info on all transcriptions associated with some account"
       tags:
       - Transcriptions
@@ -68,7 +70,8 @@ paths:
           $ref: '#/components/responses/500'
 
     post:
-      summary: "transcribes some recording"
+      description: Transcribe Audio Url
+      summary: "transcribes an audio file on some URL"
       tags:
       - Transcriptions
 
@@ -122,6 +125,7 @@ paths:
 
   "/Accounts/{AccountSid}/Recordings/{RecordingSid}/Transcriptions{mediaTypeExtension}":
     post:
+      description: Transcribe Recording
       summary: "transcribes some recording"
       tags:
       - Transcriptions
