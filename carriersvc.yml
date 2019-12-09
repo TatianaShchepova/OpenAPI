@@ -272,7 +272,7 @@ components:
           type: boolean
         uri:
           description: The Uniform Resource Identifier to this resource.
-          example: /v2/Accounts/{AccountSid}/Lookups/{LookupSid}
+          example: /Accounts/{AccountSid}/Lookups/{LookupSid}
           type: string
         account_sid:
           description: An alphanumeric string identifying the account this lookup occurred through.
@@ -321,7 +321,7 @@ components:
           type: string
         uri:
           description: The Uniform Resource Identifier to this resource.
-          example: /v2/Accounts/{AccountSid}/BNA/{BnaLookupSid}
+          example: /Accounts/{AccountSid}/BNA/{BnaLookupSid}
           type: string
         api_version:
           description: The API version being used when the carrier lookup was made.
@@ -358,7 +358,7 @@ components:
           type: string
         uri:
           description: The Uniform Resource Identifier to this resource.
-          example: /v2/Accounts/{AccountSid}/BNA/{BnaLookupSid}
+          example: /Accounts/{AccountSid}/BNA/{BnaLookupSid}
           type: string
         api_version:
           description: The API version being used when the carrier lookup was made.

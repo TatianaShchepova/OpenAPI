@@ -326,7 +326,7 @@ components:
           type: string
         uri:
           description: The Uniform Resource Identifier to this resource.
-          example: /v2/Accounts/{AccountSid}/Transcriptions
+          example: /Accounts/{AccountSid}/Transcriptions
           type: string
   responses:
     transc200:

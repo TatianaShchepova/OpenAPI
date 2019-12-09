@@ -10,18 +10,18 @@ servers:
     description: Production server
 
 paths:
-  "/v2/Accounts/{AccountSid}/IncomingPhoneNumbers/{IncomingNumberSid}{mediaTypeExtension}":
+  "/Accounts/{AccountSid}/IncomingPhoneNumbers/{IncomingNumberSid}{mediaTypeExtension}":
     get:
       description: View Number
       summary: "shows info on an incoming phone number"
       tags:
       - Incoming Phone Numbers
-      
+
       parameters:
         - $ref: '#/components/parameters/AccSid'
         - $ref: '#/components/parameters/MediaExt'
         - $ref: '#/components/parameters/IncomingSid'
-      
+
       responses:
         '200':
           $ref: '#/components/responses/viewnum200'
@@ -38,12 +38,12 @@ paths:
       summary: "updates an incoming phone number data"
       tags:
       - Incoming Phone Numbers
-      
+
       parameters:
         - $ref: '#/components/parameters/AccSid'
         - $ref: '#/components/parameters/MediaExt'
         - $ref: '#/components/parameters/IncomingSid'
-      
+
       responses:
         '200':
           $ref: '#/components/responses/viewnum200'
@@ -55,7 +55,7 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-          
+
       requestBody:
         required: false
         content:
@@ -125,12 +125,12 @@ paths:
       summary: "deletes an incoming phone number"
       tags:
       - Incoming Phone Numbers
-      
+
       parameters:
         - $ref: '#/components/parameters/AccSid'
         - $ref: '#/components/parameters/MediaExt'
         - $ref: '#/components/parameters/IncomingSid'
-      
+
       responses:
         '200':
           $ref: '#/components/responses/viewnum200'
@@ -142,21 +142,21 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-    
-          
-  "/v2/Accounts/{AccountSid}/IncomingPhoneNumbers{mediaTypeExtension}":
+
+
+  "/Accounts/{AccountSid}/IncomingPhoneNumbers{mediaTypeExtension}":
     get:
       description: List Numbers
       summary: "shows info on all incoming numbers associated with some account"
       tags:
       - Incoming Phone Numbers
-      
+
       parameters:
         - $ref: '#/components/parameters/AccSid'
         - $ref: '#/components/parameters/MediaExt'
         - $ref: '#/components/parameters/Contains'
         - $ref: '#/components/parameters/FriendlyName'
-      
+
       responses:
         '200':
           $ref: '#/components/responses/viewnum200'
@@ -173,11 +173,11 @@ paths:
       summary: "purchases a new incoming number"
       tags:
       - Incoming Phone Numbers
-      
+
       parameters:
         - $ref: '#/components/parameters/AccSid'
         - $ref: '#/components/parameters/MediaExt'
-      
+
       responses:
         '200':
           $ref: '#/components/responses/viewnum200'
@@ -189,7 +189,7 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-          
+
       requestBody:
         required: false
         content:
@@ -266,7 +266,7 @@ components:
     basicAuth:
       type: http
       scheme: basic
-      
+
   parameters:
     IncomingSid:
       in: path
@@ -451,7 +451,7 @@ components:
         status_callback:
           type: string
           description: URI for the next page of the results.
-          
+
   responses:
     viewnum200:
       description: OK
@@ -459,7 +459,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/viewnum'
-            
+
     listnum200:
       description: OK
       content:
@@ -505,7 +505,7 @@ components:
               page:
                 type: integer
                 description: Current page number.
-              
+
     400:
       description: Bad Request
     401:

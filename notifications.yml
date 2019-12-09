@@ -160,7 +160,7 @@ components:
           type: string
         uri:
           description: The E.164 format number of each available number.
-          example: /v2/Accounts/{AccountSid}/Notifications/{NotificationSid}
+          example: /Accounts/{AccountSid}/Notifications/{NotificationSid}
           type: string
         account_sid:
           description: An alphanumeric string identifying the account associated with this resource.
@@ -188,7 +188,7 @@ components:
           type: string
         request_url:
           description: The URL being requested when notification was generated.
-          example: /v2/Accounts/{AccountSid}/Lookups/Cnam.json
+          example: /Accounts/{AccountSid}/Lookups/Cnam.json
           type: string
         error_code:
           description: Identifies the specific error type. For more information on error codes see the Error Dictionary.

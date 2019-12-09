@@ -92,7 +92,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  "/v2/Accounts/{AccountSid}/Calls/{CallSid}/Recordings{mediaTypeExtension}":
+  "/Accounts/{AccountSid}/Calls/{CallSid}/Recordings{mediaTypeExtension}":
     post:
       description: Record Live Call
       summary: "options include time limit, file format, trimming silence and transcribing"
@@ -271,7 +271,7 @@ components:
           type: string
         uri:
           description: The Uniform Resource Identifier to this resource.
-          example: /v2/Accounts/{AccountSid}/Recordings/{RecordingSid}.json
+          example: /Accounts/{AccountSid}/Recordings/{RecordingSid}.json
           type: string
   responses:
     rec200:
