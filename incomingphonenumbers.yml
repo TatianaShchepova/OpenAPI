@@ -419,7 +419,7 @@ components:
           type: string
           description: The type of Avaya CPaaS number (local, international, etc.).
         voice_caller_id_lookup:
-          type: string
+          type: boolean
           description: Specifies if the incoming number has voice caller ID lookup enabled.
         friendly_name:
           type: string
@@ -450,7 +450,7 @@ components:
           description: The date the number was procured by Avaya.
         status_callback:
           type: string
-          description: URI for the next page of the results.
+          description: A URL that will be requested when the call connects and ends, sending information about the call.
 
   responses:
     viewnum200:

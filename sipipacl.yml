@@ -448,7 +448,7 @@ components:
         uri:
           type: integer
           description: The Uniform Resource Identifier to this resource.
-          example: /v2/Accounts/{AccountSid}/SIP/IpAccessControlLists/{IPACLSid}/IpAddresses/{IPSid}
+          example: /Accounts/{AccountSid}/SIP/IpAccessControlLists/{IPACLSid}/IpAddresses/{IPSid}
         account_sid:
           type: integer
           description: An alphanumeric string identifying the account associated with this resource.

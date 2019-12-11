@@ -1,0 +1,801 @@
+openapi: 3.0.0
+
+info:
+  title: Avaya Onecloud CPaaS
+  description: Make communications happen anywhere
+  version: "2.0"
+
+servers:
+  - url: https://api.zang.io/v2
+    description: Production server
+
+paths:
+  "/Accounts/{AccountSid}/SIP/Domains{mediaTypeExtension}":
+    get:
+      description: List Domains
+      summary: "List all your SIP domains"
+      tags:
+      - SIP Credentials
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/listdom200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      description: Create Domain
+      summary: "Create new SIP domain"
+      tags:
+      - SIP Credentials
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/viewdom200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+      requestBody:
+        required: false
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/reqdom'
+
+  "/Accounts/{AccountSid}/SIP/Domains/{DomainSid}{mediaTypeExtension}":
+    get:
+      description: View Domain
+      summary: "Get info on your SIP domain"
+      tags:
+      - SIP Credentials
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/DomSid'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/viewdom200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+    post:
+      description: Update Domain
+      summary: "Updates info for credentials list"
+      tags:
+      - SIP Credentials
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/DomSid'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/viewdom200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+      requestBody:
+        required: false
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/requpdom'
+    delete:
+      description: Delete Domain
+      summary: "Deletes SIP Domain"
+      tags:
+      - SIP Credentials
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/DomSid'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/viewdom200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  "/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/CredentialListedMappings{mediaTypeExtension}":
+    get:
+      description: List Mapped Credentials Lists
+      summary: "shows info on credential lists attached to a SIP domain"
+      tags:
+      - SIP Credentials
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/DomSid'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/listmappedcred200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      description: Create Credentials List
+      summary: "Create SIP domain credentials list"
+      tags:
+      - SIP Credentials
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/DomSid'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/viewcredentials200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - CredentialListSid
+              properties:
+                CredentialListSid:
+                  type: string
+                  description: The SID of the credential list that you wish to associate with this domain.
+
+  "/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/CredentialListedMappings{CredentialsListSid}{mediaTypeExtension}":
+    delete:
+      description: Delete Credential
+      summary: "Deletes SIP domain credentials"
+      tags:
+      - SIP Credentials
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/DomSid'
+        - $ref: '#/components/parameters/CLSid'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/viewcredentials200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  "/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/IpAccessControlListMappings{mediaTypeExtension}":
+    get:
+      description: List Mapped IP ACLs
+      summary: "shows info on IP access control lists attached to a SIP domain"
+      tags:
+      - SIP Credentials
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/DomSid'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/listmappedipacl200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      description: Map IP ACL
+      summary: "Maps IP access control list to a SIP domain"
+      tags:
+      - SIP Credentials
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/DomSid'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/viewacl200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - IpAccessControlListSid
+              properties:
+                IpAccessControlListSid:
+                  type: string
+                  description: The Sid of the IP ACL that you wish to associate with this domain.
+
+  "/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/IpAccessControlListMappings/{IpAccessControlListSid}{mediaTypeExtension}":
+    delete:
+      description: Delete Credential
+      summary: "Deletes SIP domain credentials"
+      tags:
+      - SIP Credentials
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/DomSid'
+        - $ref: '#/components/parameters/IPACLSid'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/viewacl200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+  parameters:
+    IPACLSid:
+      in: path
+      name: IpAccessControllListSid
+      description: >
+            IP Access Control List Sid.
+      schema:
+        type: string
+      required: true
+    DomSid:
+      in: path
+      name: DomainSid
+      description: >
+            Domain Sid.
+      schema:
+        type: string
+      required: true
+    CLSid:
+      in: path
+      name: CredentialsListSid
+      description: >
+            Credentials List Sid.
+      schema:
+        type: string
+      required: true
+    PageSize:
+      in: query
+      name: PageSize
+      description: >
+            Used to specify the amount of list items to return per page.
+      schema:
+        type: integer
+      required: false
+    Page:
+      in: query
+      name: Page
+      description: >
+            Used to return a particular page within the list.
+      schema:
+        type: integer
+      required: false
+    AccSid:
+      name: AccountSid
+      description: >
+            Your Account Sid
+      in: path
+      required: true
+      schema:
+        type: string
+    MediaExt:
+      description: >
+            By default, Avaya's REST API returns XML. You may obtain CSV, JSON
+            or HTML by appending ".csv", ".json", or ".html".
+      in: path
+      name: mediaTypeExtension
+      required: true
+      schema:
+        type: string
+        enum:
+          - .xml
+          - .json
+          - .csv
+          - .html
+        default: .xml
+
+  schemas:
+    viewacl:
+      type: object
+      properties:
+        ip_addresses_count:
+           type: integer
+           description: Number of the assigned IP addresses on this IP access control list.
+           example: 1
+        subresource_uris:
+          $ref: '#/components/schemas/subresource'
+        sid:
+           type: string
+           description: An alphanumeric string identifying this resource.
+           example: IpAccessControlListSid
+        date_updated:
+          type: string
+          description: The date the credential list was last updated.
+          example: Wed, 17 Jul 2019 17:21:35 -0000
+        date_created:
+          type: integer
+          description: The date this credential list was created.
+          example: Wed, 17 Jul 2019 17:20:31 -0000
+        friendly_name:
+          type: integer
+          description: A human-readable name associated with this domain.
+          example: NewIpAclList
+        uri:
+          type: integer
+          description: The Uniform Resource Identifier to this resource.
+          example: /v2/Accounts/{AccountSid}/SIP/IpAccessControlLists/{IPACLSid}
+        account_sid:
+          type: integer
+          description: An alphanumeric string identifying the account associated with this resource.
+          example: AccountSid
+    viewcredentials:
+      type: object
+      properties:
+        subresource_uris:
+            $ref: '#/components/schemas/subresource'
+        sid:
+          type: string
+          description: An alphanumeric string identifying this resource.
+          example: CredentialSid
+        date_updated:
+          type: string
+          description: The date the credential list was last updated.
+          example: Thu, 30 Oct 2014 19:40:07 -0000
+        date_created:
+          type: string
+          description: The date this credential list was created.
+          example: Thu, 30 Oct 2014 19:40:07 -0000
+        credentials_count:
+          type: integer
+          description: The number of credentials in the list.
+          example: 0
+        friendly_name:
+          type: string
+          description: A human-readable name associated with this credential list.
+          example: Test List
+        uri:
+          type: string
+          description: The Uniform Resource Identifier to this resource.
+          example: /Accounts/{AccountSid}/SIP/CredentialLists
+        account_sid:
+          type: string
+          description: An alphanumeric string identifying the account associated with this resource.
+          example: AccountSid
+    subresource:
+      type: object
+      description: URIs for managing this resource.
+      properties:
+        ip_access_control_list_mappings:
+          description: URI for managing domains.
+          example: /Accounts/{AccountSid}/SIP/IpAccessControlLists/{AclSid}/IpAddresses
+          type: string
+        credential_list_mappings:
+          description: URI for managing credential list mappings.
+          example: /Accounts/{AccountSid}/SIP/Domains/{DomainSid}/CredentialListMappings
+          type: string
+    viewdom:
+      type: object
+      properties:
+        auth_type:
+           type: string
+           description: The types of authentication associated with your domain. You must have at least one or all requests will be blocked. Allowed Values are IP_ACL,CREDENTIAL_LIST, and IP_AND_CREDENTIAL.
+           example: ip_acl
+        voice_status_callback_method:
+          type: string
+          description: Specifies the HTTP method used to request HeartbeatUrl. Default Value, POST; Allowed Values, POST or GET.
+          example: POST
+        voice_heartbeat_callback:
+          type: integer
+          description: URL that can be requested every 60 seconds during the call to notify of elapsed time and pass other general information.
+          example: http://example.com/webhook
+        subresource_uris:
+          $ref: '#/components/schemas/subresource'
+        domain_sip_url:
+          type: string
+          description: Complete URL for this SIP domain.
+          example: example.sip.avayacloud.com
+        date_updated:
+          type: string
+          description: The date the application resource was last updated.
+          example: Thu, 06 Jun 2019 16:59:42 -0000
+        voice_status_callback_url:
+          type: string
+          description: The URL that Avaya CPaaS will use to send you status notifications regarding your SIP call.
+          example: http://example.com/webhook
+        uri:
+           type: string
+           description: The Uniform Resource Identifier to this resource.
+           example: /Accounts/{AccountSid}/SIP/Domains/{DomainSid}
+        friendly_name:
+          type: string
+          description: A human-readable name associated with this domain.
+          example: DomainFriendlyName
+        domain_name:
+          type: string
+          description: An address on Avaya CPaaS uniquely associated with your account and through which all your SIP traffic is routed.
+          example: testing_domain
+        account_sid:
+          type: string
+          description: An alphanumeric string identifying the account of the domain.
+          example: AccountSid
+        allow_international:
+          type: boolean
+          description: Specifies whether international calling with this domain is allowed. Allowed values are true or false.
+          example: true
+        voice_url:
+          type: string
+          description: The URL requested when a call is received by your domain.
+          example: http://example.com/example.xml
+        voice_heartbeat_callback_method:
+          type: string
+          description: Specifies the HTTP method used to request HeartbeatUrl. Default Value, POST; Allowed Value, POST or GET.
+          example: POST
+        sid:
+          type: string
+          description: An alphanumeric string identifying this resource.
+          example: DomainSid
+        date_created:
+          type: string
+          description: The date this domain was created.
+          example: Thu, 06 Jun 2019 16:59:42 -0000
+        voice_fallback_method:
+          type: integer
+          description: The HTTP method used when requesting the VoiceFallbackUrl. Default Value, POST; Allowed Value, POST or GET.
+          example: POST
+        voice_method:
+          type: string
+          description: The HTTP method used when requesting the VoiceUrl. Default Value, POST; Allowed Value, POST or GET.
+          example: POST
+        voice_fallback_url:
+          type: string
+          description: The URL requested if the VoiceUrl fails.
+          example: http://example.com/example.xml
+    requpdom:
+      type: object
+      properties:
+        FriendlyName:
+          type: string
+          description: A human-readable name associated with this domain.
+        VoiceUrl:
+          type: string
+          description: The URL requested when a call is received by your domain.
+        VoiceMethod:
+          type: string
+          description: The HTTP method used when requesting the VoiceUrl. Default Value, POST; Allowed Value, POST or GET.
+        VoiceFallbackUrl:
+          type: string
+          description: The URL requested if the VoiceUrl fails.
+        VoiceFallbackMethod:
+          type: integer
+          description: The HTTP method used when requesting the VoiceFallbackUrl. Default Value, POST; Allowed Value, POST or GET.
+        HeartbeatUrl:
+          type: string
+          description: URL that can be requested every 60 seconds during the call to notify of elapsed time and pass other general information.
+        HeartbeatMethod:
+          type: string
+          description: Specifies the HTTP method used to request HeartbeatUrl. Default Value, POST; Allowed Value, POST or GET.
+        VoiceStatusCallback:
+          type: string
+          description: The URL that Avaya CPaaS will use to send you status notifications regarding your SIP call.
+        VoiceStatusCallbackMethod:
+          type: string
+          description: Specifies the HTTP method used to request VoiceStatusUrl. Default Value, POST; Allowed Value, POST or GET.
+    reqdom:
+      type: object
+      required:
+        - DomainName
+      properties:
+        DomainName:
+          type: string
+          description: An address on Avaya CPaaS uniquely associated with your account and through which all your SIP traffic is routed.
+        FriendlyName:
+          type: string
+          description: A human-readable name associated with this domain.
+        VoiceUrl:
+          type: string
+          description: The URL requested when a call is received by your domain.
+        VoiceMethod:
+          type: string
+          description: The HTTP method used when requesting the VoiceUrl. Default Value, POST; Allowed Value, POST or GET.
+        VoiceFallbackUrl:
+          type: string
+          description: The URL requested if the VoiceUrl fails.
+        VoiceFallbackMethod:
+          type: integer
+          description: The HTTP method used when requesting the VoiceFallbackUrl. Default Value, POST; Allowed Value, POST or GET.
+        HeartbeatUrl:
+          type: string
+          description: URL that can be requested every 60 seconds during the call to notify of elapsed time and pass other general information.
+        HeartbeatMethod:
+          type: string
+          description: Specifies the HTTP method used to request HeartbeatUrl. Default Value, POST; Allowed Value, POST or GET.
+        VoiceStatusCallback:
+          type: string
+          description: The URL that Avaya CPaaS will use to send you status notifications regarding your SIP call.
+        VoiceStatusCallbackMethod:
+          type: string
+          description: Specifies the HTTP method used to request VoiceStatusUrl. Default Value, POST; Allowed Value, POST or GET.
+
+  responses:
+    listdom200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              first_page_uri:
+                type: string
+                description: URI for the first page of results.
+                example: /Accounts/{AccountSid}/SIP/CredentialLists.json?Page=0&amp;PageSize=50
+              end:
+                type: integer
+                description: Last result index.
+                example: 3
+              total:
+                type: integer
+                description: Number of items.
+                example: 4
+              previous_page_uri:
+                type: string
+                description: URI for the previous page of results.
+                example: /Accounts/{AccountSid}/SIP/CredentialLists.json?Page=0&amp;PageSize=50
+              num_pages:
+                type: integer
+                description: Number of pages.
+                example: 1
+              uri:
+                type: string
+                description: The Uniform Resource Identifier to this resource.
+                example: /Accounts/{AccountSid}/SIP/CredentialLists.json
+              page_size:
+                type: integer
+                description: Number of items on a single page.
+                example: 50
+              start:
+                type: integer
+                description: Index of the first item on the current page.
+                example: 0
+              domains:
+                type: array
+                description: Array containing SIP domains.
+                items:
+                  $ref: '#/components/schemas/viewdom'
+              next_page_uri:
+                type: string
+                description: URI for the next page of the results.
+                example: /v2/Accounts/{AccountSid}/SIP/CredentialLists.json?Page=1&PageSize=50
+              last_page_uri:
+                type: string
+                description: URI for the last page of the results.
+                example: /v2/Accounts/{AccountSid}/SIP/CredentialLists.json?Page=1&PageSize=50
+              page:
+                type: integer
+                description: Current page number.
+                example: 0
+    viewdom200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/viewdom"
+    viewcredentials200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/viewcredentials"
+    viewacl200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/viewacl"
+    listmappedcred200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              first_page_uri:
+                type: string
+                description: URI for the first page of results.
+                example: /Accounts/{AccountSid}/SIP/Domains/{DomainSid}/CredentialListMappings.json?Page=0&amp;PageSize=50
+              end:
+                type: integer
+                description: Last result index.
+                example: 3
+              total:
+                type: integer
+                description: Number of items.
+                example: 4
+              previous_page_uri:
+                type: string
+                description: URI for the previous page of results.
+                example: /Accounts/{AccountSid}/SIP/Domains/{DomainSid}/CredentialListMappings.json?Page=0&amp;PageSize=50
+              num_pages:
+                type: integer
+                description: Number of pages.
+                example: 1
+              uri:
+                type: string
+                description: The Uniform Resource Identifier to this resource.
+                example: /Accounts/{AccountSid}/SIP/Domains/{DomainSid}/CredentialListMappings.json
+              page_size:
+                type: integer
+                description: Number of items on a single page.
+                example: 50
+              start:
+                type: integer
+                description: Index of the first item on the current page.
+                example: 0
+              next_page_uri:
+                type: string
+                description: URI for the next page of the results.
+                example: /Accounts/{AccountSid}/SIP/Domains/{DomainSid}/CredentialListMappings.json?Page=1&PageSize=50
+              last_page_uri:
+                type: string
+                description: URI for the last page of the results.
+                example: /Accounts/{AccountSid}/SIP/Domains/{DomainSid}/CredentialListMappings.json?Page=1&PageSize=50
+              page:
+                type: integer
+                description: Current page number.
+                example: 0
+              credentials_lists:
+                type: array
+                description: Array containing SIP domain credentials.
+                items:
+                  $ref: '#/components/schemas/viewcredentials'
+    listmappedipacl200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              first_page_uri:
+                type: string
+                description: URI for the first page of results.
+                example: /Accounts/{AccountSid}/SIP/Domains/{DomainSid}/IpAccessControlListMappings.json?Page=0&PageSize=50
+              ip_addresses:
+                type: array
+                description: Array containing IP addresses.
+                items:
+                  $ref: '#/components/schemas/viewacl'
+              end:
+                type: integer
+                description: Last result index.
+                example: 3
+              total:
+                type: integer
+                description: Number of items.
+                example: 4
+              previous_page_uri:
+                type: string
+                description: URI for the previous page of results.
+                example: /Accounts/{AccountSid}/SIP/Domains/{DomainSid}/IpAccessControlListMappings.json?Page=0&PageSize=50
+              num_pages:
+                type: integer
+                description: Number of pages.
+                example: 1
+              uri:
+                type: string
+                description: The Uniform Resource Identifier to this resource.
+                example: /Accounts/{AccountSid}/SIP/Domains/{DomainSid}/IpAccessControlListMappings.json
+              page_size:
+                type: integer
+                description: Number of items on a single page.
+                example: 50
+              start:
+                type: integer
+                description: Index of the first item on the current page.
+                example: 0
+              next_page_uri:
+                type: string
+                description: URI for the next page of the results.
+                example: /Accounts/{AccountSid}/SIP/Domains/{DomainSid}/IpAccessControlListMappings.json?Page=1&PageSize=50
+              last_page_uri:
+                type: string
+                description: URI for the last page of the results.
+                example: /Accounts/{AccountSid}/SIP/Domains/{DomainSid}/IpAccessControlListMappings.json?Page=1&PageSize=50
+              page:
+                type: integer
+                description: Current page number.
+                example: 0
+              ip_access_control:
+                type: array
+                description: Array containing SIP domain ip access control lists.
+                items:
+                  $ref: '#/components/schemas/viewacl'
+
+    400:
+      description: Bad Request
+    401:
+      description: The supplied credentials, if any, are not sufficient to access the resource.
+    404:
+      description: The requested resource was not found
+    500:
+      description: Internal server error.
