@@ -1,0 +1,214 @@
+openapi: 3.0.0
+
+info:
+  title: Avaya Onecloud CPaaS
+  description: Make communications happen anywhere
+  version: "2.0"
+
+servers:
+  - url: https://api.zang.io/v2
+    description: Production server
+
+paths:
+  "/Accounts/{AccountSid}{mediaTypeExtension}":
+    get:
+      description: View Account
+      summary: "See all the information associated with your account"
+      tags:
+      - Accounts
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/viewacc200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      description: Update Account
+      summary: "Updates account information"
+      tags:
+      - Accounts
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/viewacc200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - FriendlyName
+              properties:
+                FriendlyName:
+                  type: string
+                  description: The custom alias for your account.
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+  parameters:
+    AccSid:
+      name: AccountSid
+      description: >
+            Your Account Sid.
+      in: path
+      required: true
+      schema:
+        type: string
+    MediaExt:
+      description: >
+            By default, Avaya's REST API returns XML. You may obtain CSV, JSON
+            or HTML by appending ".csv", ".json", or ".html".
+      in: path
+      name: mediaTypeExtension
+      required: true
+      schema:
+        type: string
+        enum:
+          - .xml
+          - .json
+          - .csv
+          - .html
+        default: .xml
+  schemas:
+    viewacc:
+      type: object
+      properties:
+        status:
+          type: string
+          description: This is the status of the Avaya CPaaS account being requested. The state of the status can be either active, suspended, or closed.
+          example: active
+        account_balance:
+          type: string
+          description: The current balance of an account.
+          example: "11.56"
+        max_outbound_limit:
+          type: string
+          description: The maximum allowed rate per segment. For example, if the max_outbound_limit was $1.00 then any calls costing more than $1.00 per minute would be restricted.
+          example: "0.4"
+        date_updated:
+          type: string
+          description: Date of most recent account update. Dates are returned in GMT.
+          example: Wed, 11 Dec 2019 15:30:25 -0000
+        time_zone:
+          type: string
+          description: The name of an accounts timezone.
+          example: GMT
+        subresource_uris:
+          $ref: '#/components/schemas/subresource'
+        friendly_name:
+          type: string
+          description: By default, the email used to create the account but a custom alias can be set by POSTing a FriendlyName parameter to the /Account/{AccountSID} endpoint.
+          example: foo@bar.com
+        uri:
+          type: string
+          description: The URI for this resource.
+          example: /Accounts/{AccountSid}.json
+        sid:
+          type: string
+          description: An alphanumeric string identifying the account.
+          example: AccountSid
+        date_created:
+          type: string
+          description: Date of account creation. Dates are returned in GMT.
+          example: Tue, 10 Dec 2019 20:34:11 -0000
+        type:
+          type: string
+          description: The type of account being requested. If the account is not yet funded Type is "trial". Otherwise, Type for upgraded accounts is "full".
+          example: full
+    subresource:
+      type: object
+      description: List of an account’s various subresources and their URI path. Examples of subresources are things like calls that occurred through the account, sms messages, purchased phone numbers, etc.
+      properties:
+        usages:
+          description: URI for managing usages.
+          example: /Accounts/{AccountSid}/Usages
+          type: string
+        conferences:
+          description: URI for managing conferences.
+          example: /Accounts/{AccountSid}/Conferences
+          type: string
+        transactions:
+          description: URI for managing billing.
+          example: /Accounts/{AccountSid}/Transactions
+          type: string
+        notifications:
+          description: URI for managing notifications.
+          example: /Accounts/{AccountSid}/Notifications
+          type: string
+        fraud:
+          description: URI for managing fraud control elements.
+          example: /Accounts/{AccountSid}/Fraud
+          type: string
+        calls:
+          description: URI for managing calls.
+          example: /Accounts/{AccountSid}/Calls
+          type: string
+        transcriptions:
+          description: URI for managing transcriptions.
+          example: /Accounts/{AccountSid}/Transcriptions
+          type: string
+        incoming_phone_numbers:
+          description: URI for managing incoming phone numbers.
+          example: /Accounts/{AccountSid}/IncomingPhoneNumbers
+          type: string
+        sms_messages:
+          description: URI for managing sms messages.
+          example: /Accounts/{AccountSid}/SMS/Messages
+          type: string
+        carrier:
+          description: URI for managing carrier-related elements.
+          example: /Accounts/{AccountSid}/Carrier
+          type: string
+        available_phone_numbers:
+          description: URI for managing available phone numbers.
+          example: /Accounts/{AccountSid}/AvailablePhoneNumbers
+          type: string
+        cnam:
+          description: URI for managing cnam.
+          example: /Accounts/{AccountSid}/CNAM
+          type: string
+        bna:
+          description: URI for managing bna.
+          example: /Accounts/{AccountSid}/BNA
+          type: string
+  responses:
+    viewacc200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/viewacc'
+    400:
+      description: Bad Request
+    401:
+      description: The supplied credentials, if any, are not sufficient to access the resource.
+    404:
+      description: The requested resource was not found
+    500:
+      description: Internal server error.

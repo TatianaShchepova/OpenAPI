@@ -15,7 +15,7 @@ paths:
       description: List Conferences
       summary: "Shows information on all conferences associated with some account"
       tags:
-      - Applications
+      - Conferences
 
       parameters:
         - $ref: '#/components/parameters/AccSid'
@@ -38,49 +38,73 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-    post:
-      description: Create Applications
-      summary: "Creates a new application"
-      tags:
-      - Applications
-
-      parameters:
-        - $ref: '#/components/parameters/AccSid'
-        - $ref: '#/components/parameters/MediaExt'
-
-      responses:
-        '200':
-          $ref: '#/components/responses/viewapp200'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
-      requestBody:
-        required: true
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/reqapp'
-
-  "/Accounts/{AccountSid}/Applications/{ApplicationSid}{mediaTypeExtension}":
+  "/Accounts/{AccountSid}/Conferences/{ConferenceSid}{mediaTypeExtension}":
     get:
-      description: View Application
-      summary: "Shows info on all Avaya CPaaS applications associated with some account"
+      description: View Conference
+      summary: "Shows information on some conference"
       tags:
-      - Applications
+      - Conferences
 
       parameters:
         - $ref: '#/components/parameters/AccSid'
         - $ref: '#/components/parameters/MediaExt'
-        - $ref: '#/components/parameters/AppSid'
+        - $ref: '#/components/parameters/ConfSid'
 
       responses:
         '200':
-          $ref: '#/components/responses/viewapp200'
+          $ref: '#/components/responses/viewconf200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  "/Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants{mediaTypeExtension}":
+    get:
+      description: List Participants
+      summary: "Lists all participants on some conference"
+      tags:
+      - Conferences
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/ConfSid'
+        - $ref: '#/components/parameters/Muted'
+        - $ref: '#/components/parameters/Deaf'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/listpart200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  "/Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants/{ParticipantSid}{mediaTypeExtension}":
+    get:
+      description: View Participant
+      summary: "Shows info on some conference participant"
+      tags:
+      - Conferences
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/ConfSid'
+        - $ref: '#/components/parameters/PartSid'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/viewpart200'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -90,19 +114,20 @@ paths:
         '500':
           $ref: '#/components/responses/500'
     post:
-      description: Update Application
-      summary: "Updates Avaya CPaaS application data"
+      description: Mute/Deafen Participant
+      summary: "Mutes or deafens conference participant"
       tags:
-      - Applications
+      - Conferences
 
       parameters:
         - $ref: '#/components/parameters/AccSid'
         - $ref: '#/components/parameters/MediaExt'
-        - $ref: '#/components/parameters/AppSid'
+        - $ref: '#/components/parameters/ConfSid'
+        - $ref: '#/components/parameters/PartSid'
 
       responses:
         '200':
-          $ref: '#/components/responses/viewapp200'
+          $ref: '#/components/responses/viewpart200'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -117,21 +142,29 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/reqapp'
+              type: object
+              properties:
+                Muted:
+                  type: boolean
+                  description: Specifies whether the participant should be muted. Allowed values are "true" and "false".
+                Deaf:
+                  type: boolean
+                  description: Specifies whether the participant should be deafened. Allowed values are "true" and "false"
     delete:
-      description: Delete Application
-      summary: "Deletes Avaya CPaaS application"
+      description: Hang up Participant
+      summary: "Hangs up a conference participant"
       tags:
-      - Applications
+      - Conferences
 
       parameters:
         - $ref: '#/components/parameters/AccSid'
         - $ref: '#/components/parameters/MediaExt'
-        - $ref: '#/components/parameters/AppSid'
+        - $ref: '#/components/parameters/ConfSid'
+        - $ref: '#/components/parameters/PartSid'
 
       responses:
         '200':
-          $ref: '#/components/responses/viewapp200'
+          $ref: '#/components/responses/viewpart200'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -141,7 +174,41 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
+  "/Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants/{ParticipantSid}/Play{mediaTypeExtension}":
+    post:
+      description: Play Audio to Participant
+      summary: "Plays an audio file to a conference participant"
+      tags:
+      - Conferences
 
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/ConfSid'
+        - $ref: '#/components/parameters/PartSid'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/viewpart200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                AudioUrl:
+                  type: string
+                  description: A URL to the audio file that will be played. Mutliple AudioUrl parameters may be passed to play more than one file.
 components:
   securitySchemes:
     basicAuth:
@@ -149,6 +216,22 @@ components:
       scheme: basic
 
   parameters:
+    Muted:
+      in: query
+      name: Muted
+      description: >
+            Filter by participants that are muted. Allowed values are "true" or "false".
+      schema:
+        type: boolean
+      required: false
+    Deaf:
+      in: query
+      name: Deaf
+      description: >
+            Filter by participants that are deaf. Allowed values are "true" or "false".
+      schema:
+        type: boolean
+      required: false
     FriendlyName:
       in: query
       name: FriendlyName
@@ -197,10 +280,26 @@ components:
       schema:
         type: integer
       required: false
+    PartSid:
+      name: ParticipantSid
+      description: >
+          Participant Sid.
+      in: path
+      required: true
+      schema:
+        type: string
+    ConfSid:
+      name: ConferenceSid
+      description: >
+          Conference Sid.
+      in: path
+      required: true
+      schema:
+        type: string
     AccSid:
       name: AccountSid
       description: >
-            Your Account Sid
+            Your Account Sid.
       in: path
       required: true
       schema:
@@ -221,237 +320,157 @@ components:
           - .html
         default: .xml
   schemas:
-    reqapp:
+    viewpart:
       type: object
       properties:
-        FriendlyName:
-          type: string
-          description: The name used to identify this application. If this is not included at the initial POST, it is given the value of the application sid.
-          example: ExampleApplication
-        voice_url:
-          type: string
-          description: The URL requested once the call connects. This URL must be valid and should return InboundXML containing instructions on how to process your call. A badly formatted Url will NOT fallback to the FallbackUrl but return an error without placing the call. Url length is limited to 200 characters.
-          example: www.example.com/voicerequest
-        voice_method:
-          type: string
-          description: The HTTP method used to request the URL once the call connects. Valid parameters are GET and POST - any other value will default to POST.
-          example: POST
-        voice_fallback_url:
-          type: string
-          description: URL used if the required URL is unavailable or if any errors occur during execution of the InboundXML returned by the required URL. Url length is limited to 200 characters.
-          example: www.example.com/voicefallback
-        voice_fallback_method:
-          type: string
-          description: The HTTP method used to request the FallbackUrl once the call connects. Valid parameters are GET and POST - any other value will default to POST.
-          example: POST
-        voice_caller_id_lookup:
-          type: boolean
-          description: Look up the caller’s caller-ID name from the CNAM database (additional charges apply). Allowed values are "true" and "false".
-          example: true
-        sms_url:
-          type: string
-          description: The URL requested when an SMS is received. This URL must be valid and should return InboundXML containing instructions on how to process the SMS. A badly formatted URL will NOT fallback to the FallbackUrl but return an error without placing the call. URL length is limited to 200 characters.
-          example: www.example.com/smsrequest
-        sms_method:
-          type: string
-          description: The HTTP method used to request the URL when an SMS is received. Valid parameters are GET and POST - any other value will default to POST.
-          example: POST
-        sms_fallback_url:
-          type: string
-          description: URL used if the required URL is unavailable or if any errors occur during execution of the InboundXML returned by the required URL. Url length is limited to 200 characters.
-          example: www.example.com/smsfallback
-        sms_fallback_method:
-          type: string
-          description: The HTTP method used to request the FallbackUrl once the call connects. Valid parameters are GET and POST - any other value will default to POST.
-          example: POST
-        mms_url:
-          type: string
-          description: The URL returning InboundXML incoming phone numbers should execute when receiving an mms.
-          example: www.example.com/mmsrequest
-        mms_method:
-          type: string
-          description: The HTTP method used when making requests to the MmsUrl. Valid parameters are GET and POST - any other value will default to POST.
-          example: POST
-        mms_fallback_url:
-          type: string
-          description: URL used if any errors occur during execution of InboundXML from an sms or at initial request of the MmsUrl. Url length is limited to 200 characters.
-          example: www.example.com/mmsfallback
-        mms_fallback_method:
-          type: string
-          description: Specifies the HTTP method (GET or POST) used to request the MmsFallbackUrl. Valid parameters are GET and POST - any other value will default to POST.
-          example: POST
         date_updated:
           type: string
-          description: The date the number was last updated.
-          example: Mon, 30 Jul 2012 16:53:23 +0000
-        client_count:
+          description: The date the participant was last updated.
+          example: Tue, 10 Dec 2019 20:34:45 -0000
+        deaf:
+          type: boolean
+          description: Specifies if participant is deafened. Allowed values are "true" or "false".
+          example: false
+        caller_number:
+          type: string
+          description: The number of the caller.
+          example: "14166144164"
+        caller_name:
+          type: string
+          description: The Caller-ID of the caller.
+          example: Bob
+        duration:
           type: integer
-          description: number of DID's using this application.
-          example: 1
+          description: The duration of how long the participant has been on the conference.
+          example: 50
+        conference_sid:
+          type: string
+          description: An alphanumeric string identifying this resource.
+          example: ConferenceSid
+        muted:
+          type: boolean
+          description: Specifies if participant is muted. Allowed values are "true" or "false".
+          example: false
+        uri:
+          type: string
+          description: The URI for this resource.
+          example: /Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants/{ParticipantSid}.json
+        account_sid:
+          type: string
+          description: An alphanumeric string identifying the account the conference occurred through.
+          example: AccountSid
+        call_sid:
+          type: string
+          description: An alphanumeric string identifying the call the conference occurred through.
+          example: CallSid
         sid:
           type: string
           description: An alphanumeric string identifying this resource.
-          example: ApplicationSid
-        heartbeat_method:
-          type: string
-          description: The HTTP method Avaya CPaaS will use when requesting the HeartbeatURL. Either GET or POST.
-          example: GET
-
-        status_callback_method:
-          type: string
-          description: URI for the last page of the results.
-          example: POST
-        hangup_callback:
-          type: string
-          description: This is a StatusCallback clone that will be phased out in future versions.
-          example: www.example.com/hangupcallback
-        hangup_callback_method:
-          type: string
-          description: This is a StatusCallbackMethod clone that will be phased out in future versions.
-          example: POST
-        heartbeat_url:
-          type: string
-          description: URL that can be used to monitor the phone number.
-          example: www.example.com/heartbeat
-        friendly_name:
-          type: string
-          description: A human-readable name associated with this domain.
-          example: TestApplication
-        uri:
-          type: string
-          description: The Uniform Resource Identifier to this resource.
-          example: /Accounts/{AccountSid}/Applications/{ApplicationSid}
-
-        account_sid:
-          type: string
-          description: An alphanumeric string identifying the account associated with this resource.
-          example: AccountSid
-
-        api_version:
-          type: string
-          description: The API version used with this incoming number.
-          example: v2
-
+          example: ParticipantSid
         date_created:
           type: string
-          description: The date the number was procured by Avaya.
-          example: Mon, 30 Jul 2012 16:53:23 +0000
-        status_callback:
-          type: string
-          description: A URL that will be requested when the call connects and ends, sending information about the call.
-          example: www.example.com/statuscallback
-    viewapp:
+          description: The date the participant entered the conference.
+          example: Tue, 10 Dec 2019 20:34:11 -0000
+    viewconf:
       type: object
       properties:
-        mms_url:
+        status:
           type: string
-          description: The URL returning InboundXML incoming phone numbers should execute when receiving an mms.
-          example: www.example.com/mmsrequest
-        date_updated:
-          type: string
-          description: The date the number was last updated.
-          example: Mon, 30 Jul 2012 16:53:23 +0000
-        mms_method:
-          type: string
-          description: The HTTP method used when making requests to the MmsUrl. Either GET or POST.
-          example: POST
-        voice_url:
-          type: string
-          description: The URL returning InboundXML incoming phone numbers should execute when receiving a call.
-          example: www.example.com/voicerequest
-        voice_fallback_method:
-          type: string
-          description: Specifies the HTTP method (GET or POST) used to request the VoiceFallbackUrl.
-          example: POST
-        client_count:
-          type: integer
-          description: number of DID's using this application.
-          example: 1
-        mms_fallback_method:
-          type: string
-          description: Specifies the HTTP method (GET or POST) used to request the MmsFallbackUrl.
-          example: POST
+          description: Conference status. Possible values are “init”, “in-progress” or “completed”. “init” means the conference has been initialize, but no one has yet entered.
+          example: completed
+        subresource_uris:
+          type: object
+          description: URIs for managing this resource.
+          properties:
+            participants:
+              description: URI for managing participants.
+              example: /Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants.json
+              type: string
         sid:
           type: string
           description: An alphanumeric string identifying this resource.
-          example: ApplicationSid
-        heartbeat_method:
+          example: ConferenceSid
+        date_updated:
           type: string
-          description: The HTTP method Avaya CPaaS will use when requesting the HeartbeatURL. Either GET or POST.
-          example: GET
-        mms_fallback_url:
-          type: string
-          description: URL used if any errors occur during execution of InboundXML from an sms or at initial request of the MmsUrl.
-          example: www.example.com/mmsfallback
-        status_callback_method:
-          type: string
-          description: URI for the last page of the results.
-          example: POST
-        voice_fallback_url:
-          type: string
-          description: URL used if any errors occur during execution of InboundXML from an sms or at initial request of the VoiceUrl.
-          example: www.example.com/voicefallback
-        hangup_callback:
-          type: string
-          description: This is a StatusCallback clone that will be phased out in future versions.
-          example: www.example.com/hangupcallback
-        hangup_callback_method:
-          type: string
-          description: This is a StatusCallbackMethod clone that will be phased out in future versions.
-          example: POST
-        heartbeat_url:
-          type: string
-          description: URL that can be used to monitor the phone number.
-          example: www.example.com/heartbeat
-        sms_url:
-          type: string
-          description: The URL returning InboundXML incoming phone numbers should execute when receiving an sms.
-          example: www.example.com/smsrequest
-        voice_method:
-          type: string
-          description: The HTTP method used when making requests to the VoiceUrl. Either GET or POST.
-          example: POST
-        voice_caller_id_lookup:
-          type: boolean
-          description: Specifies if the incoming number has voice caller ID lookup enabled.
-          example: true
-        friendly_name:
-          type: string
-          description: A human-readable name associated with this domain.
-          example: TestApplication
-        uri:
-          type: string
-          description: The Uniform Resource Identifier to this resource.
-          example: /Accounts/{AccountSid}/Applications/{ApplicationSid}
-        sms_fallback_url:
-          type: string
-          description: URL used if any errors occur during execution of InboundXML from an sms or at initial request of the SmsUrl.
-          example: www.example.com/smsfallback
-        account_sid:
-          type: string
-          description: An alphanumeric string identifying the account associated with this resource.
-          example: AccountSid
-        sms_method:
-          type: string
-          description: The HTTP method used when making requests to the SmsUrl. Either GET or POST.
-          example: POST
-        api_version:
-          type: string
-          description: The API version used with this incoming number.
-          example: v2
-        sms_fallback_method:
-          type: string
-          description: Specifies the HTTP method (GET or POST) used to request the SmsFallbackUrl.
-          example: POST
+          description: The date the conference was last updated.
+          example: Tue, 10 Dec 2019 20:34:45 -0000
         date_created:
           type: string
-          description: The date the number was procured by Avaya.
-          example: Mon, 30 Jul 2012 16:53:23 +0000
-        status_callback:
+          description: The date the conference was created.
+          example: Tue, 10 Dec 2019 20:34:11 -0000
+        active_participants_count:
+          type: integer
+          description: The number of participants currently connected to conference.
+          example: 1
+        friendly_name:
           type: string
-          description: A URL that will be requested when the call connects and ends, sending information about the call.
-          example: www.example.com/statuscallback
+          description: User generated name of the conference.
+          example: ExampleConferenceName
+        uri:
+          type: string
+          description: The URI for this resource.
+          example: ApplicationSid
+        account_sid:
+          type: string
+          description: An alphanumeric string identifying the account the conference occurred through.
+          example: AccountSid
   responses:
+    listpart200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              first_page_uri:
+                type: string
+                description: URI for the first page of results.
+                example: /Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants.json?Page=0&PageSize=50
+              end:
+                type: integer
+                description: Last result index.
+                example: 3
+              total:
+                type: integer
+                description: Number of items.
+                example: 4
+              previous_page_uri:
+                type: string
+                description: URI for the previous page of results.
+                example: /Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants.json?Page=0&PageSize=50
+              num_pages:
+                type: integer
+                description: Number of pages.
+                example: 1
+              uri:
+                type: string
+                description: The Uniform Resource Identifier to this resource.
+                example: /Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants.json
+              page_size:
+                type: integer
+                description: Number of items on a single page.
+                example: 50
+              start:
+                type: integer
+                description: Index of the first item on the current page.
+                example: 0
+              participants:
+                type: array
+                description: Array containing participants.
+                items:
+                  $ref: '#/components/schemas/viewpart'
+              next_page_uri:
+                type: string
+                description: URI for the next page of the results.
+                example: /Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants.json?Page=1&PageSize=50
+              last_page_uri:
+                type: string
+                description: URI for the last page of the results.
+                example: /Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants.json?Page=1&PageSize=50
+              page:
+                type: integer
+                description: Current page number.
+                example: 0
     listconf200:
       description: OK
       content:
@@ -508,12 +527,18 @@ components:
                 type: integer
                 description: Current page number.
                 example: 0
-    viewapp200:
+    viewpart200:
       description: OK
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/viewapp'
+            $ref: '#/components/schemas/viewpart'
+    viewconf200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/viewconf'
     400:
       description: Bad Request
     401:
