@@ -145,11 +145,11 @@ components:
         sms_enabled:
           description: Is SMS enabled for this phone number? Can be true or false?
           example: true
-          type: boolean
+          type: string
         unblock_support:
           description: The date the transcription resource was created.
           example: true
-          type: boolean
+          type: string
         country_code:
           description: Code used to identify the phone numbers geographic origin. Found at the beginning of the number.
           example: +1
@@ -165,7 +165,7 @@ components:
         supports_forwarded_from:
           description: Does phone number support forwarded from? Can be true or false.
           example: true
-          type: boolean
+          type: string
         phone_number:
           description: The E.164 format number of each available number.
           example: +19051111111
@@ -185,7 +185,7 @@ components:
         mms_enabled:
           description: Is MMS enabled for this phone number? Can be true or false.
           example: true
-          type: boolean
+          type: string
         per_minute_cost:
           description: Cost of calls per minute
           example: 0.05
@@ -193,7 +193,7 @@ components:
         voice_enabled:
           description: Is voice enabled for this phone number? Can be true or false.
           example: true
-          type: boolean
+          type: string
         region:
           description: The region of the available phone number. Usually a two letter abbreviation.
           example: CA

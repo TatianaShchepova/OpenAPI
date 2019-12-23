@@ -431,7 +431,7 @@ components:
           description: The number that was called.
           example: +14166144164
         caller_id_blocked:
-          type: boolean
+          type: string
           description: Specifies whether the caller ID of the inbound phone number was blocked.
           example: false
         answered_by:

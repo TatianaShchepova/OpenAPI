@@ -342,7 +342,7 @@ components:
                 type: string
                 description: The number that was called.
               caller_id_blocked:
-                type: boolean
+                type: string
                 description: Specifies whether the caller ID of the inbound phone number was blocked.
               answered_by:
                 type: string

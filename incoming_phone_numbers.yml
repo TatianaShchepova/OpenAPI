@@ -348,15 +348,15 @@ components:
         voice:
           description: Voice capability
           example: true
-          type: boolean
+          type: string
         sms:
           description: SMS capability
           example: true
-          type: boolean
+          type: string
         mms:
           description: MMS capability
           example: true
-          type: boolean
+          type: string
     viewnum:
       type: object
       properties:
@@ -419,7 +419,7 @@ components:
           type: string
           description: The type of Avaya CPaaS number (local, international, etc.).
         voice_caller_id_lookup:
-          type: boolean
+          type: string
           description: Specifies if the incoming number has voice caller ID lookup enabled.
         friendly_name:
           type: string

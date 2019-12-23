@@ -501,7 +501,7 @@ components:
           description: An alphanumeric string identifying the account of the domain.
           example: AccountSid
         allow_international:
-          type: boolean
+          type: string
           description: Specifies whether international calling with this domain is allowed. Allowed values are true or false.
           example: true
         voice_url:

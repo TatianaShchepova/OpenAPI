@@ -271,13 +271,13 @@ components:
           type: string
           description: Prefix of the destination being whitelisted, authorized or   blocked.
         mobile_enabled:
-          type: boolean
+          type: string
           description: Mobile status for the destination. If false, all mobile call activity will be rejected or disabled.
         landline_enabled:
-          type: boolean
+          type: string
           description: Landline status for the destination. If false, all landline call activity will be rejected or disabled.
         sms_enabled:
-          type: boolean
+          type: string
           description: Status of the SMS for destination. Can be true or false. If false, SMS for same destination will be rejected.
         date_created:
           type: string
@@ -289,7 +289,7 @@ components:
           type: string
           description: The date the fraud control resource will expire.
         is_lock:
-          type: boolean
+          type: string
           description: Specifies whether the destinations permission state (blocked, whitelisted, etc.) has been locked by our system. Currently, the US is locked as a whitelisted destination.
 
   responses:

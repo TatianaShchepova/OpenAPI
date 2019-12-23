@@ -269,7 +269,7 @@ components:
         mobile:
           description: Boolean value specifying whether the phone number is mobile.
           example: true
-          type: boolean
+          type: string
         uri:
           description: The Uniform Resource Identifier to this resource.
           example: /Accounts/{AccountSid}/Lookups/{LookupSid}
