@@ -3,7 +3,7 @@ openapi: 3.0.0
 info:
   title: Avaya Onecloud CPaaS
   description: Make communications happen anywhere
-  version: "2.0"
+  version: "3.0.0"
 
 servers:
   - url: https://api.zang.io/v2
@@ -36,7 +36,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/x-www-form-urlencoded::
+          application/x-www-form-urlencoded:
             schema:
               properties:
                 PhoneNumber:
@@ -92,7 +92,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/x-www-form-urlencoded::
+          application/x-www-form-urlencoded:
             schema:
               properties:
                 PhoneNumber:
@@ -148,7 +148,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/x-www-form-urlencoded::
+          application/x-www-form-urlencoded:
             schema:
               properties:
                 PhoneNumber:

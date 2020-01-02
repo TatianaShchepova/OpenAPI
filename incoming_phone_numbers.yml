@@ -3,11 +3,21 @@ openapi: 3.0.0
 info:
   title: Avaya Onecloud CPaaS
   description: Make communications happen anywhere
-  version: "2.0"
+  version: "3.0.0"
 
 servers:
   - url: https://api.zang.io/v2
     description: Production server
+  - url: https://api.zang.io/v3
+    description: Production V3 Beta
+  - url: https://api.zangsandbox.com/v2
+    description: Sandbox server
+  - url: https://api.zangsandbox.com/v3
+    description: Sandbox V3 Beta
+  - url: https://apik.zang.io/v2
+    description: Staging server
+  - url: https://apik.zang.io/v3
+    description: Staging V3 Beta
 
 paths:
   "/Accounts/{AccountSid}/IncomingPhoneNumbers/{IncomingNumberSid}{mediaTypeExtension}":
