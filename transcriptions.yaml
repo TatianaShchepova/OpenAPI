@@ -31,10 +31,6 @@ paths:
         - $ref: '#/components/parameters/TranscriptionSid'
         - $ref: '#/components/parameters/AccSid'
         - $ref: '#/components/parameters/MediaExt'
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/PageSize'
-        - $ref: '#/components/parameters/Status'
-        - $ref: '#/components/parameters/DateTranscribed'
 
       responses:
         '200':
@@ -227,7 +223,7 @@ components:
     MediaExt:
       description: >
             By default, Avaya's REST API returns XML. You may obtain CSV, JSON
-            or HTML by appending ".csv", ".json", or ".html".
+            or XML by appending ".csv", ".json", or ".xml".
       in: path
       name: mediaTypeExtension
       required: true
@@ -237,7 +233,6 @@ components:
           - .xml
           - .json
           - .csv
-          - .html
         default: .xml
     AccSid:
       name: AccountSid
