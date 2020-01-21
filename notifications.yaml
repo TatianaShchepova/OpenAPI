@@ -1,0 +1,269 @@
+openapi: 3.0.0
+
+info:
+  title: Avaya Onecloud CPaaS
+  description: Make communications happen anywhere
+  version: "3.0.0"
+
+servers:
+  - url: https://api.zang.io/v2
+    description: Production server
+  - url: https://api.zang.io/v3
+    description: Production V3 Beta
+  - url: https://api.zangsandbox.com/v2
+    description: Sandbox server
+  - url: https://api.zangsandbox.com/v3
+    description: Sandbox V3 Beta
+  - url: https://apik.zang.io/v2
+    description: Staging server
+  - url: https://apik.zang.io/v3
+    description: Staging V3 Beta
+
+paths:
+  "/Accounts/{AccountSid}/Notifications{mediaTypeExtension}":
+    get:
+      description: List Notifications
+      summary: "shows info on all notifications associated with some account"
+      tags:
+      - Notifications
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Log'
+
+      responses:
+        '200':
+          $ref: '#/components/responses/noti200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  "/Accounts/{AccountSid}/Notifications/{NotificationSid}{mediaTypeExtension}":
+    get:
+      description: View Notification
+      summary: "shows information on some notification"
+      tags:
+      - Notifications
+
+      parameters:
+        - $ref: '#/components/parameters/AccSid'
+        - $ref: '#/components/parameters/MediaExt'
+        - $ref: '#/components/parameters/NotiSid'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Log'
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notification'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+  parameters:
+    PageSize:
+      in: query
+      name: PageSize
+      description: >
+            Used to specify the amount of list items to return per page.
+      schema:
+        type: integer
+      required: false
+    Page:
+      in: query
+      name: Page
+      description: >
+            Used to return a particular page within the list.
+      schema:
+        type: integer
+      required: false
+    AccSid:
+      name: AccountSid
+      description: >
+            Your Account Sid
+      in: path
+      required: true
+      schema:
+        type: string
+    NotiSid:
+      name: NotificationSid
+      description: >
+            Notification Sid
+      in: path
+      required: true
+      schema:
+        type: string
+    MediaExt:
+      description: >
+            By default, Avaya's REST API returns XML. You may obtain CSV, JSON
+            or XML by appending ".csv", ".json", or ".xml".
+      in: path
+      name: mediaTypeExtension
+      required: true
+      schema:
+        type: string
+        enum:
+          - .xml
+          - .json
+          - .csv
+        default: .xml
+    Log:
+      name: Log
+      description: >
+            Specifies that only notifications with the given log level value should be listed. Allowed values are 1,2 or 3, where 2=INFO, 1=WARNING, 0=ERROR.
+      in: query
+      required: false
+      schema:
+        type: integer
+
+  schemas:
+    notification:
+      type: object
+      description: Object containing information on available phone numbers
+      properties:
+        log:
+          description: Specifies the notification log level 2=INFO, 1=WARNING, 0=ERROR.
+          example: 0
+          type: integer
+        response_headers:
+          description: The HTTP headers returned by the server when the notification occurred.
+          example:
+          type: string
+        request_method:
+          description: The method used to request RequestUrl when the notification was generated.
+          example: POST
+          type: string
+        date_updated:
+          description: The date the credential list was last updated.
+          example: Fri, 29 Nov 2019 15:44:46 -0000
+          type: string
+        message_text:
+          description: Text of the notification message.
+          example: ErrorCode=31021
+          type: string
+        request_variables:
+          description: The variables sent with the HTTP request that generated the notification.
+          example: PhoneNumber
+          type: string
+        uri:
+          description: The E.164 format number of each available number.
+          example: /Accounts/{AccountSid}/Notifications/{NotificationSid}
+          type: string
+        account_sid:
+          description: An alphanumeric string identifying the account associated with this resource.
+          example: AccountSid
+          type: string
+        message_date:
+          description: The date the Avaya CPaaS account received the actual notification. May be a bit different from DateCreated due to buffering.
+          example: Fri, 29 Nov 2019 15:44:46 -0000
+          type: string
+        response_body:
+          description: The HTTP headers returned by the server when the notification occurred.
+          example:
+          type: string
+        call_sid:
+          description: The sid identifying the recorded call.
+          example: CallSid
+          type: string
+        sid:
+          description: An alphanumeric string identifying this resource.
+          example: NotificationSid
+          type: string
+        date_created:
+          description: The date this credential list was created.
+          example: Fri, 29 Nov 2019 15:42:30 -0000
+          type: string
+        request_url:
+          description: The URL being requested when notification was generated.
+          example: /Accounts/{AccountSid}/Lookups/Cnam.json
+          type: string
+        error_code:
+          description: Identifies the specific error type. For more information on error codes see the Error Dictionary.
+          example: 31021
+          type: integer
+        api_version:
+          description: The API version used with this incoming number.
+          example: v2
+          type: string
+        more_info:
+          description: URL leading to our error dictionary for more information on the error.
+          example: http://docs.zang.io/aspx/rest#errorcodes-31021
+          type: string
+  responses:
+    noti200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              first_page_uri:
+                type: string
+                description: URI for the first page of results.
+              available_phone_numbers:
+                type: array
+                description: Array containing information on available phone numbers.
+                items:
+                  $ref: '#/components/schemas/notification'
+              end:
+                type: integer
+                description: Last result index.
+              total:
+                type: integer
+                description: Number of items.
+              previous_page_uri:
+                type: string
+                description: URI for the previous page of results.
+              num_pages:
+                type: integer
+                description: Number of pages.
+              uri:
+                type: string
+                description: The Uniform Resource Identifier to this resource.
+              page_size:
+                type: integer
+                description: Number of items on a single page.
+              start:
+                type: integer
+                description: Index of the first item on the current page.
+              next_page_uri:
+                type: string
+                description: URI for the next page of the results.
+              last_page_uri:
+                type: string
+                description: URI for the last page of the results.
+              page:
+                type: integer
+                description: Current page number.
+
+
+    400:
+      description: Bad Request
+    401:
+      description: The supplied credentials, if any, are not sufficient to access the resource.
+    404:
+      description: The requested resource was not found
+    500:
+      description: Internal server error.
