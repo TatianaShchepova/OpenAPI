@@ -107,6 +107,18 @@ components:
   schemas:
     viewacc:
       type: object
+      required:
+        - status
+        - account_balance
+        - max_outbound_limit
+        - date_updated
+        - time_zone
+        - subresource_uris
+        - friendly_name
+        - uri
+        - sid
+        - date_created
+        - type
       properties:
         status:
           type: string
