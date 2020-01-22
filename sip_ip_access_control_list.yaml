@@ -351,7 +351,7 @@ components:
       name: IpAddressSid
       description: >
             Access control list IP address SID.
-      in: query
+      in: path
       required: true
       schema:
         type: string
@@ -398,6 +398,16 @@ components:
 
     viewacl:
       type: object
+      required:
+        - ip_addresses_count
+        - subresource_uris
+        - sid
+        - date_updated
+        - date_created
+        - friendly_name
+        - page_size
+        - uri
+        - account_sid
       properties:
         ip_addresses_count:
            type: integer
@@ -431,6 +441,15 @@ components:
           example: AccountSid
     viewip:
       type: object
+      required:
+        - date_created
+        - subresource_uris
+        - sid
+        - date_updated
+        - ip_address
+        - friendly_name
+        - uri
+        - account_sid
       properties:
         date_created:
           type: integer
@@ -469,6 +488,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - first_page_uri
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - uri
+              - page_size
+              - start
+              - ip_access_control
+              - next_page_uri
+              - last_page_uri
+              - page
             properties:
               first_page_uri:
                 type: string
@@ -525,6 +557,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - first_page_uri
+              - ip_addresses
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - uri
+              - page_size
+              - start
+              - next_page_uri
+              - last_page_uri
+              - page
             properties:
               first_page_uri:
                 type: string

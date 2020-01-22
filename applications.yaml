@@ -274,7 +274,6 @@ components:
           type: string
           description: The HTTP method Avaya CPaaS will use when requesting the HeartbeatURL. Either GET or POST.
           example: GET
-
         status_callback_method:
           type: string
           description: URI for the last page of the results.
@@ -320,6 +319,34 @@ components:
           example: www.example.com/statuscallback
     viewapp:
       type: object
+      required:
+        - mms_url
+        - date_updated
+        - mms_method
+        - voice_url
+        - voice_fallback_method
+        - client_count
+        - mms_fallback_method
+        - sid
+        - heartbeat_method
+        - mms_fallback_url
+        - status_callback_method
+        - voice_fallback_url
+        - hangup_callback
+        - hangup_callback_method
+        - heartbeat_url
+        - sms_url
+        - voice_method
+        - voice_caller_id_lookup
+        - friendly_name
+        - uri
+        - sms_fallback_url
+        - account_sid
+        - sms_method
+        - api_version
+        - sms_fallback_method
+        - date_created
+        - status_callback
       properties:
         mms_url:
           type: string
@@ -436,6 +463,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - first_page_uri
+              - applications
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - uri
+              - page_size
+              - start
+              - next_page_uri
+              - last_page_uri
+              - page
             properties:
               first_page_uri:
                 type: string

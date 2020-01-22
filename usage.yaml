@@ -161,6 +161,18 @@ components:
   schemas:
     viewusage:
       type: object
+      required:
+        - product
+        - month
+        - average_cost
+        - year
+        - total
+        - day
+        - product_id
+        - total_cost
+        - uri
+        - sid
+        - quantity
       properties:
         product:
           type: string
@@ -212,6 +224,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - first_page_uri
+              - usages
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - uri
+              - page_size
+              - start
+              - next_page_uri
+              - last_page_uri
+              - page
             properties:
               first_page_uri:
                 type: string

@@ -245,6 +245,16 @@ components:
     recording:
       type: object
       description: Object containing information on available phone numbers
+      required:
+        - duration
+        - call_sid
+        - sid
+        - date_updated
+        - date_created
+        - price
+        - recording_url
+        - api_version
+        - uri
       properties:
         duration:
           description: Time of recording in seconds.
@@ -289,6 +299,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - first_page_uri
+              - recordings
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - uri
+              - page_size
+              - start
+              - next_page_uri
+              - last_page_uri
+              - page
             properties:
               first_page_uri:
                 type: string
@@ -334,6 +357,29 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - date_updated
+              - parent_call_sid
+              - duration
+              - from
+              - to
+              - caller_id_blocked
+              - answered_by
+              - sid
+              - recordings_count
+              - price
+              - api_version
+              - status
+              - direction
+              - start_time
+              - date_created
+              - subresource_uris
+              - forwarded_from
+              - uri
+              - account_sid
+              - duration_billed
+              - end_time
+              - phone_number_sid
             properties:
               date_updated:
                 type: string

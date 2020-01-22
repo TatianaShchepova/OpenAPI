@@ -272,6 +272,22 @@ components:
     transcription:
       type: object
       description: Object containing transcription information
+      required:
+        - sid
+        - date_created
+        - date_transcribed
+        - date_updated
+        - account_sid
+        - status
+        - type
+        - audio_url
+        - duration
+        - transcription_text
+        - api_version
+        - price
+        - transcribe_callback
+        - callback_method
+        - uri
       properties:
         sid:
           description: An alphanumeric string identifying this resource.
@@ -340,6 +356,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - page
+              - page_size
+              - num_pages
+              - start
+              - total
+              - end
+              - uri
+              - first_page_uri
+              - last_page_uri
+              - next_page_uri
+              - previous_page_uri
+              - transcriptions
             properties:
               page:
                 type: integer

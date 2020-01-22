@@ -141,7 +141,24 @@ components:
   schemas:
     notification:
       type: object
-      description: Object containing information on available phone numbers
+      description: shows information on some notification
+      required:
+        - log
+        - response_headers
+        - request_method
+        - date_updated
+        - message_text
+        - uri
+        - account_sid
+        - message_date
+        - response_body
+        - call_sid
+        - sid
+        - date_created
+        - request_url
+        - error_code
+        - api_version
+        - more_info
       properties:
         log:
           description: Specifies the notification log level 2=INFO, 1=WARNING, 0=ERROR.
@@ -168,7 +185,7 @@ components:
           example: PhoneNumber
           type: string
         uri:
-          description: The E.164 format number of each available number.
+          description: The Uniform Resource Identifier to this resource.
           example: /Accounts/{AccountSid}/Notifications/{NotificationSid}
           type: string
         account_sid:
@@ -218,13 +235,26 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - first_page_uri
+              - notifications
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - uri
+              - page_size
+              - start
+              - next_page_uri
+              - last_page_uri
+              - page
             properties:
               first_page_uri:
                 type: string
                 description: URI for the first page of results.
-              available_phone_numbers:
+              notifications:
                 type: array
-                description: Array containing information on available phone numbers.
+                description: Array containing notifications.
                 items:
                   $ref: '#/components/schemas/notification'
               end:
@@ -257,8 +287,6 @@ components:
               page:
                 type: integer
                 description: Current page number.
-
-
     400:
       description: Bad Request
     401:

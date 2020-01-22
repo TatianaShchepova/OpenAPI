@@ -417,6 +417,29 @@ components:
           description: Your authenticated SIP password, used only for SIP calls.
     viewcall:
       type: object
+      required:
+        - date_updated
+        - parent_call_sid
+        - duration
+        - from
+        - to
+        - caller_id_blocked
+        - answered_by
+        - sid
+        - recordings_count
+        - price
+        - api_version
+        - status
+        - direction
+        - start_time
+        - date_created
+        - subresource_uris
+        - forwarded_from
+        - uri
+        - account_sid
+        - duration_billed
+        - end_time
+        - phone_number_sid
       properties:
         date_updated:
           type: string
@@ -522,6 +545,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - first_page_uri
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - calls
+              - uri
+              - page_size
+              - start
+              - next_page_uri
+              - last_page_uri
+              - page
             properties:
               first_page_uri:
                 type: string

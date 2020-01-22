@@ -222,6 +222,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - page
+              - page_size
+              - num_pages
+              - start
+              - total
+              - end
+              - uri
+              - first_page_uri
+              - last_page_uri
+              - next_page_uri
+              - previous_page_uri
+              - available_phone_numbers
             properties:
               page:
                 type: integer

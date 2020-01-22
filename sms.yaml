@@ -32,7 +32,8 @@ paths:
         - $ref: '#/components/parameters/MediaExt'
         - $ref: '#/components/parameters/To'
         - $ref: '#/components/parameters/From'
-        - $ref: '#/components/parameters/DateSent'
+        - $ref: '#/components/parameters/DateSentGt'
+        - $ref: '#/components/parameters/DateSentLt'
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/PageSize'
 
@@ -121,7 +122,7 @@ components:
       schema:
         type: string
       required: false
-    DateSent>:
+    DateSentGt:
       in: query
       name: DateSent>
       description: >
@@ -129,14 +130,14 @@ components:
       schema:
         type: string
       required: false
-      DateSent<:
-        in: query
-        name: DateSent<
-        description: >
-        Lists all SMS messages sent in a date range. Set DateSent>= and DateSent<= in YYYY-MM-DD format.
-        schema:
-          type: string
-        required: false
+    DateSentLt:
+      in: query
+      name: DateSent<
+      description: >
+            Lists all SMS messages sent in a date range. Set DateSent>= and DateSent<= in YYYY-MM-DD format.
+      schema:
+        type: string
+      required: false
     PageSize:
       in: query
       name: PageSize
@@ -216,6 +217,20 @@ components:
           example: true
     viewsms:
       type: object
+      required:
+        - body
+        - status
+        - direction
+        - date_updated
+        - price
+        - from
+        - uri
+        - account_sid
+        - to
+        - sid
+        - date_sent
+        - date_created
+        - api_version
       properties:
         body:
           type: string
@@ -276,6 +291,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - page
+              - page_size
+              - num_pages
+              - start
+              - total
+              - end
+              - uri
+              - first_page_uri
+              - last_page_uri
+              - next_page_uri
+              - previous_page_uri
+              - sms_messages
             properties:
               page:
                 type: integer

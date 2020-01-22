@@ -324,7 +324,7 @@ components:
   parameters:
     IPACLSid:
       in: path
-      name: IpAccessControllListSid
+      name: IpAccessControlListSid
       description: >
             IP Access Control List Sid.
       schema:
@@ -388,6 +388,15 @@ components:
   schemas:
     viewacl:
       type: object
+      required:
+        - ip_addresses_count
+        - subresource_uris
+        - sid
+        - date_updated
+        - date_created
+        - friendly_name
+        - uri
+        - account_sid
       properties:
         ip_addresses_count:
            type: integer
@@ -421,6 +430,15 @@ components:
           example: AccountSid
     viewcredentials:
       type: object
+      required:
+        - subresource_uris
+        - sid
+        - date_updated
+        - date_created
+        - credentials_count
+        - friendly_name
+        - uri
+        - account_sid
       properties:
         subresource_uris:
             $ref: '#/components/schemas/subresource'
@@ -466,6 +484,26 @@ components:
           type: string
     viewdom:
       type: object
+      required:
+        - auth_type
+        - voice_status_callback_method
+        - voice_heartbeat_callback
+        - subresource_uris
+        - domain_sip_url
+        - date_updated
+        - voice_status_callback_url
+        - uri
+        - friendly_name
+        - domain_name
+        - account_sid
+        - allow_international
+        - voice_url
+        - voice_heartbeat_callback_method
+        - sid
+        - date_created
+        - voice_fallback_method
+        - voice_method
+        - voice_fallback_url
       properties:
         auth_type:
            type: string
@@ -614,6 +652,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - first_page_uri
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - uri
+              - page_size
+              - start
+              - domains
+              - next_page_uri
+              - last_page_uri
+              - page
             properties:
               first_page_uri:
                 type: string
@@ -688,6 +739,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - first_page_uri
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - uri
+              - page_size
+              - start
+              - next_page_uri
+              - last_page_uri
+              - page
+              - credentials_lists
             properties:
               first_page_uri:
                 type: string
@@ -744,6 +808,20 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - first_page_uri
+              - ip_addresses
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - uri
+              - page_size
+              - start
+              - next_page_uri
+              - last_page_uri
+              - page
+              - ip_access_control
             properties:
               first_page_uri:
                 type: string

@@ -208,6 +208,20 @@ components:
           example: https://tinyurl.com/lpewlmo
     viewmms:
       type: object
+      required:
+        - status
+        - mms_sid
+        - account_sid
+        - from
+        - to
+        - body
+        - date_created
+        - date_sent
+        - media_url
+        - price
+        - direction
+        - api_version
+        - date_updated
       properties:
         status:
           type: string
@@ -268,6 +282,18 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - page
+              - page_size
+              - num_pages
+              - start
+              - total
+              - uri
+              - first_page_uri
+              - last_page_uri
+              - next_page_uri
+              - previous_page_uri
+              - mms_messages
             properties:
               page:
                 type: integer

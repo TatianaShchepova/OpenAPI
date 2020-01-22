@@ -304,55 +304,68 @@ components:
   responses:
     200:
       description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  first_page_uri:
-                    type: string
-                    description: URI for the first page of results.
-                  end:
-                    type: integer
-                    description: Last result index.
-                  total:
-                    type: integer
-                    description: Number of items.
-                  previous_page_uri:
-                    type: string
-                    description: URI for the previous page of results.
-                  num_pages:
-                    type: integer
-                    description: Number of pages.
-                  uri:
-                    type: string
-                    description: The Uniform Resource Identifier to this resource.
-                  page_size:
-                    type: integer
-                    description: Number of items on a single page.
-                  start:
-                    type: integer
-                    description: Index of the first item on the current page.
-                  next_page_uri:
-                    type: string
-                    description: URI for the next page of the results.
-                  last_page_uri:
-                    type: string
-                    description: URI for the last page of the results.
-                  page:
-                    type: integer
-                    description: Current page number.
-                  frauds:
-                    type: array
-                    description: Array containing fraud control resources.
-                    items:
-                      properties:
-                        whitelisted:
-                          $ref: '#/components/schemas/Fraudlist'
-                        authorized:
-                          $ref: '#/components/schemas/Fraudlist'
-                        blocked:
-                          $ref: '#/components/schemas/Fraudlist'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - first_page_uri
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - uri
+              - page_size
+              - start
+              - next_page_uri
+              - last_page_uri
+              - page
+              - frauds
+            properties:
+              first_page_uri:
+                type: string
+                description: URI for the first page of results.
+              end:
+                type: integer
+                description: Last result index.
+              total:
+                type: integer
+                description: Number of items.
+              previous_page_uri:
+                type: string
+                description: URI for the previous page of results.
+              num_pages:
+                type: integer
+                description: Number of pages.
+              uri:
+                type: string
+                description: The Uniform Resource Identifier to this resource.
+              page_size:
+                type: integer
+                description: Number of items on a single page.
+              start:
+                type: integer
+                description: Index of the first item on the current page.
+              next_page_uri:
+                type: string
+                description: URI for the next page of the results.
+              last_page_uri:
+                type: string
+                description: URI for the last page of the results.
+              page:
+                type: integer
+                description: Current page number.
+              frauds:
+                type: array
+                description: Array containing fraud control resources.
+                items:
+                  properties:
+                    whitelisted:
+                      $ref: '#/components/schemas/Fraudlist'
+                    authorized:
+                      $ref: '#/components/schemas/Fraudlist'
+                    blocked:
+                      $ref: '#/components/schemas/Fraudlist'
     400:
       description: Bad Request
     401:

@@ -391,6 +391,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - first_page_uri
+              - carrier_lookups
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - uri
+              - page_size
+              - start
+              - next_page_uri
+              - last_page_uri
+              - page
             properties:
               first_page_uri:
                 type: string
@@ -436,6 +449,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - first_page_uri
+              - cnam_lookups
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - uri
+              - page_size
+              - start
+              - next_page_uri
+              - last_page_uri
+              - page
             properties:
               first_page_uri:
                 type: string
@@ -481,6 +507,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - first_page_uri
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - uri
+              - page_size
+              - start
+              - next_page_uri
+              - last_page_uri
+              - page
+              - bna_lookups
             properties:
               first_page_uri:
                 type: string

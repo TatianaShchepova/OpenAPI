@@ -368,6 +368,36 @@ components:
           type: string
     viewnum:
       type: object
+      required:
+        - mms_url
+        - date_updated
+        - voice_url
+        - voice_fallback_method
+        - capabilities
+        - mms_fallback_method
+        - sid
+        - heartbeat_method
+        - mms_fallback_url
+        - status_callback_method
+        - voice_fallback_url
+        - phone_number
+        - hangup_callback
+        - hangup_callback_method
+        - heartbeat_url
+        - sms_url
+        - voice_method
+        - type
+        - voice_caller_id_lookup
+        - friendly_name
+        - uri
+        - sms_fallback_url
+        - account_sid
+        - sms_method
+        - api_version
+        - sms_fallback_method
+        - next_renewal_date
+        - date_created
+        - status_callback
       properties:
         mms_url:
           type: string
@@ -475,6 +505,19 @@ components:
         application/json:
           schema:
             type: object
+            required:
+              - first_page_uri
+              - end
+              - total
+              - previous_page_uri
+              - num_pages
+              - incoming_phone_numbers
+              - uri
+              - page_size
+              - start
+              - next_page_uri
+              - last_page_uri
+              - page
             properties:
               first_page_uri:
                 type: string
