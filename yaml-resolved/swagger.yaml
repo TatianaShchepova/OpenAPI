@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Avaya OneCloud CPaaS
+  title: Avaya OneCloud
   description: Avaya OneCloud CPaaS is a robust development platform — create what
     you need, integrate it seamlessly with your current communications systems and
     go! Getting started with Avaya OneCloud CPaaS is easy.
