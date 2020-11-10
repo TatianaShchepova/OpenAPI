@@ -15,4 +15,4 @@ jobs:
            
           # OPTIONAL CONFIG, use if necessary
           # oas-file-path: './swagger.yaml'
-          # api-version: 'v2.0.1'
+          # api-version: 'v1.0.0'
