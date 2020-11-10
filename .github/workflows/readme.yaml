@@ -12,7 +12,3 @@ jobs:
       - uses: readmeio/github-readme-sync@v2
         with:
           readme-oas-key: mE4jxEQ5uof4fdMzXRG5WvbGRGoXC4Oc:5faaa2a99cf75bdbafa5378c
-           
-          # OPTIONAL CONFIG, use if necessary
-          # oas-file-path: './swagger.yaml'
-          # api-version: 'v1.0.0'
