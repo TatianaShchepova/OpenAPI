@@ -1,0 +1,1022 @@
+openapi: 3.0.0
+info:
+  title: Avaya OneCloud CPaaS
+  description: Avaya OneCloud CPaaS is a robust development platform — create what
+    you need, integrate it seamlessly with your current communications systems and
+    go! Getting started with Avaya OneCloud CPaaS is easy.
+  version: 2.0.1
+servers:
+- url: https://api.zang.io/v2
+  description: Production server
+paths:
+  /Accounts/{AccountSid}/Calls{mediaTypeExtension}:
+    get:
+      tags:
+      - Calls
+      summary: List all calls associated with your account or filter results
+      description: List Calls
+      parameters:
+      - name: AccountSid
+        in: path
+        description: |
+          Your Account Sid.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: mediaTypeExtension
+        in: path
+        description: |
+          By default, Avaya's REST API returns XML. You may obtain CSV, JSON or XML by appending ".csv", ".json", or ".xml".
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: .xml
+          enum:
+          - .xml
+          - .json
+          - .csv
+      - name: To
+        in: query
+        description: |
+          Filter by a specific number calls were made to.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: From
+        in: query
+        description: |
+          Filter by a specific number calls were made from.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: Status
+        in: query
+        description: |
+          Filter by calls with the specified status. Allowed values are "ringing", "in-progress", "queued", "busy", "completed", "no-answer", and "failed".
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: StartTime
+        in: query
+        description: |
+          Filter by all calls beginning on or from a certain date. Date range can be specified using inequalities like so, "StartTime>=YYYY-MM-DD".
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: SipDomain
+        in: query
+        description: |
+          Filter all calls that contain SipDomain in the source and destination address.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: Page
+        in: query
+        description: |
+          Used to return a particular page within the list.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: PageSize
+        in: query
+        description: |
+          Used to specify the amount of list items to return per page.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: Bad Request
+        "401":
+          description: The supplied credentials, if any, are not sufficient to access
+            the resource.
+        "404":
+          description: The requested resource was not found
+        "500":
+          description: Internal server error.
+    post:
+      tags:
+      - Calls
+      summary: Make a Call
+      description: Make Call
+      parameters:
+      - name: AccountSid
+        in: path
+        description: |
+          Your Account Sid.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: mediaTypeExtension
+        in: path
+        description: |
+          By default, Avaya's REST API returns XML. You may obtain CSV, JSON or XML by appending ".csv", ".json", or ".xml".
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: .xml
+          enum:
+          - .xml
+          - .json
+          - .csv
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/reqcall'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/viewcall'
+        "400":
+          description: Bad Request
+        "401":
+          description: The supplied credentials, if any, are not sufficient to access
+            the resource.
+        "404":
+          description: The requested resource was not found
+        "500":
+          description: Internal server error.
+  /Accounts/{AccountSid}/SMS/Messages{mediaTypeExtension}:
+    get:
+      tags:
+      - SMS
+      summary: shows info on all SMS messages associated with some account
+      description: List SMS
+      parameters:
+      - name: AccountSid
+        in: path
+        description: |
+          Your Account Sid.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: mediaTypeExtension
+        in: path
+        description: |
+          By default, Avaya's REST API returns XML. You may obtain CSV, JSON or XML by appending ".csv", ".json", or ".xml".
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: .xml
+          enum:
+          - .xml
+          - .json
+          - .csv
+      - name: To
+        in: query
+        description: |
+          List all SMS sent to this number. The value does not have to be in any specific format.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: From
+        in: query
+        description: |
+          List all SMS sent from this number. The value does not have to be in any specific format.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: DateSent>
+        in: query
+        description: |
+          Lists all SMS messages sent in a date range. Set DateSent>= and DateSent<= in YYYY-MM-DD format.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: DateSent<
+        in: query
+        description: |
+          Lists all SMS messages sent in a date range. Set DateSent>= and DateSent<= in YYYY-MM-DD format.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: Page
+        in: query
+        description: |
+          Used to return a particular page within the list.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: PageSize
+        in: query
+        description: |
+          Used to specify the amount of list items to return per page.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        "400":
+          description: Bad Request
+        "401":
+          description: The supplied credentials, if any, are not sufficient to access
+            the resource.
+        "404":
+          description: The requested resource was not found
+        "500":
+          description: Internal server error.
+    post:
+      tags:
+      - SMS
+      summary: send SMS message
+      description: Send SMS
+      parameters:
+      - name: AccountSid
+        in: path
+        description: |
+          Your Account Sid.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: mediaTypeExtension
+        in: path
+        description: |
+          By default, Avaya's REST API returns XML. You may obtain CSV, JSON or XML by appending ".csv", ".json", or ".xml".
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: .xml
+          enum:
+          - .xml
+          - .json
+          - .csv
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/reqsms'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/viewsms'
+        "400":
+          description: Bad Request
+        "401":
+          description: The supplied credentials, if any, are not sufficient to access
+            the resource.
+        "404":
+          description: The requested resource was not found
+        "500":
+          description: Internal server error.
+components:
+  schemas:
+    reqsms:
+      required:
+      - Body
+      - To
+      type: object
+      properties:
+        To:
+          type: string
+          description: Must be an SMS capable number. E164 format is best practice.
+          example: "14166144164"
+        From:
+          type: string
+          description: Must be an Avaya CPaaS number associated with your account.
+            If not specified, the SMS will be sent via a random SMS capable number
+            associated with your account. E164 format is best practice.
+          example: "14166144164"
+        Body:
+          type: string
+          description: Text of the SMS to be sent.
+          example: Example text
+        StatusCallback:
+          type: string
+          description: The URL that will be sent information about the SMS. Url length
+            is limited to 200 characters.
+          example: www.example.com/statuscallback
+        StatusCallbackMethod:
+          type: string
+          description: The HTTP method used to request the StatusCallback. Valid parameters
+            are GET and POST.
+          example: POST
+        AllowMultiple:
+          type: boolean
+          description: Specifies whether you want an SMS that has a body length of
+            over 160 characters to be sent as a concatenated SMS or multipart SMS.
+            Concatenated SMS is not supported for international SMS. Allowed values
+            are true or false.
+          example: true
+    viewsms:
+      required:
+      - account_sid
+      - api_version
+      - body
+      - date_created
+      - date_sent
+      - date_updated
+      - direction
+      - from
+      - price
+      - sid
+      - status
+      - to
+      - uri
+      type: object
+      properties:
+        body:
+          type: string
+          description: Text of the SMS message sent or received. May be up to 160
+            characters in length.
+          example: Test Message.
+        status:
+          type: string
+          description: Status of the SMS; sent, sending, queued, or failed.
+          example: sent
+        direction:
+          type: string
+          description: Specifies the direction of the SMS; messages from REST API
+            are “outbound-api”, messages from incoming phone numbers to Avaya CPaaS
+            are “incoming”, messages from InboundXML initiated during an outbound
+            call are “outbound-call”, and messages from InboundXML initiated via an
+            sms reply are “outbound-reply”.
+          example: outbound-api
+        date_updated:
+          type: string
+          description: The date the SMS resource was last updated.
+          example: Tue, 24 Jul 2012 14:08:24 +0000
+        price:
+          type: string
+          description: Cost of the SMS.
+          example: "0.05"
+        from:
+          type: string
+          description: The number that sent the SMS message.
+          example: +14166144164
+        uri:
+          type: string
+          description: The Uniform Resource Identifier to this resource.
+          example: /Accounts/{AccountSid}/SMS/Messages/{SmsSid}
+        account_sid:
+          type: string
+          description: An alphanumeric string identifying the account this call occurred
+            through.
+          example: AccountSid
+        to:
+          type: string
+          description: The number that the SMS message was sent to.
+          example: +14166144164
+        sid:
+          type: string
+          description: An alphanumeric string identifying this resource.
+          example: SmsSid
+        date_sent:
+          type: string
+          description: The date the SMS message was sent.
+          example: Tue, 24 Jul 2012 14:08:24 +0000
+        date_created:
+          type: string
+          description: The date the SMS resource was created.
+          example: Tue, 24 Jul 2012 14:08:23 +0000
+        api_version:
+          type: string
+          description: The Api Version being used.
+          example: v2
+    reqcall:
+      required:
+      - From
+      - To
+      - Url
+      type: object
+      properties:
+        From:
+          type: string
+          description: The number to display as calling (i.e. Caller ID). The value
+            does not have to be a real phone number or even in a valid format. For
+            example, 8143 could be passed to the From parameter and would be displayed
+            as the caller ID. Spoofed calls carry an additional charge.
+        To:
+          type: string
+          description: The number to be called. This number should be the intended
+            destination. The value must be a real phone number and must be in a valid
+            format.
+        Url:
+          type: string
+          description: The URL requested once the call connects. This URL must be
+            valid and should return InboundXML containing instructions on how to process
+            your call. A badly formatted URL will NOT fallback to the FallbackUrl
+            but return an error without placing the call. URL length is limited to
+            200 characters.
+        Method:
+          type: string
+          description: The HTTP method used to request the URL once the call connects.
+            Valid parameters are GET and POST - any other value will default to POST.
+        FallbackUrl:
+          type: string
+          description: URL used if the required URL is unavailable or if any errors
+            occur during execution of the InboundXML returned by the required URL.
+            Url length is limited to 200 characters.
+        FallbackUrlMethod:
+          type: string
+          description: The HTTP method used to request the FallbackUrl once the call
+            connects. Valid parameters are GET and POST - any other value will default
+            to POST.
+        StatusCallback:
+          type: string
+          description: A URL that will be requested when the call connects and ends,
+            sending information about the call. URL length is limited to 200 characters.
+        StatusCallbackMethod:
+          type: string
+          description: The HTTP method used to request the StatusCallback URL. Valid
+            parameters are GET and POST - any other value will default to POST.
+        HeartbeatUrl:
+          type: string
+          description: A URL that will be requested every 60 seconds during the call,
+            sending information about the call. The HeartbeatUrl will NOT be requested
+            unless at least 60 seconds of call time have elapsed. URL length is limited
+            to 200 characters.
+        HearbeatMethod:
+          type: string
+          description: The HTTP method used to request the HeartbeatUrl. Valid parameters
+            are GET and POST - any other value will default to POST.
+        ForwardedFrom:
+          type: string
+          description: Specifies the Forwarding From number to pass to the carrier.
+        PlayDtmf:
+          type: string
+          description: Dial digits or play tones using DTMF as soon as the call connects.
+            Useful for navigating IVRs. Allowed values for digits are 0-9, '#', *,
+            W, or w (W and w are for .5 second pauses), for example '142##*' (spaces
+            are valid). Tones follow the @1000 syntax, for example to play the tone
+            4 for two seconds, 4@2000 (milliseconds) would be used.
+        Timeout:
+          type: string
+          description: Number of seconds call stays on line while waiting for an answer.
+            The max time limit is 999.
+        HideCallerId:
+          type: string
+          description: Specifies if the Caller ID will be blocked. Allowed positive
+            values are "true" and "True" - any other value will default to "false".
+        Record:
+          type: string
+          description: Specifies if this call should be recorded. Allowed positive
+            values are "true", "True" and "1" - any other value will default to "false".
+            Please note that no more than 5 recordings may be associated with a single
+            call.
+        RecordCallback:
+          type: string
+          description: The URL some parameters regarding the recording will be passed
+            to once it is completed. The longer the recording time, the longer the
+            process delay in returning the recording information. If no RecordCallback
+            is given, the recording will still be saved to the system and available
+            either in your Recording Logs or via a REST List Recordings request. Url
+            length is limited to 200 characters.
+        RecordCallbackMethod:
+          type: string
+          description: The HTTP method used to request the RecordCallback. Valid parameters
+            are GET and POST - any other value will default to POST.
+        Transcribe:
+          type: string
+          description: Specifies whether this call should be transcribed. Allowed
+            positive values are "true", "True", and "1".
+        TranscribeCallback:
+          type: string
+          description: The URL some parameters regarding the transcription will be
+            passed to once it is completed. The longer the recording time, the longer
+            the process delay in returning the transcription information. If no TranscribeCallback
+            is given, the recording will still be saved to the system and available
+            either in your Transcriptions Logs or via a REST List Transcriptions (ADD
+            URL LINK) request. Url length is limited to 200 characters.
+        StraightToVoicemail:
+          type: string
+          description: Specifies whether this call should be sent straight to the
+            user's voicemail. Allowed positive values are "true" and "True" - any
+            other value will default to "false".
+        IfMachine:
+          type: string
+          description: Specifies how Avaya CPaaS should handle this call if it goes
+            to voicemail. Allowed values are "continue" to proceed as normal, "redirect"
+            to redirect the call to the ifMachineUrl, or "hangup" to hang up the call.
+            Hangup occurs when the tone is played. IfMachine accuracy is around 90%
+            and may not work in all countries.
+        IfMachineUrl:
+          type: string
+          description: The URL Avaya CPaaS will redirect to for instructions if a
+            voicemail machine is detected while the IfMachine parameter is set to
+            "redirect". Url length is limited to 200 characters.
+        IfMachineMethod:
+          type: string
+          description: The HTTP method used to request the IfMachineUrl. Valid parameters
+            are GET and POST - any other value will default to POST.
+        SipAuthUsername:
+          type: string
+          description: Your authenticated SIP username, used only for SIP calls.
+        SipAuthPassword:
+          type: string
+          description: Your authenticated SIP password, used only for SIP calls.
+    viewcall:
+      required:
+      - account_sid
+      - answered_by
+      - api_version
+      - caller_id_blocked
+      - date_created
+      - date_updated
+      - direction
+      - duration
+      - duration_billed
+      - end_time
+      - forwarded_from
+      - from
+      - parent_call_sid
+      - phone_number_sid
+      - price
+      - recordings_count
+      - sid
+      - start_time
+      - status
+      - subresource_uris
+      - to
+      - uri
+      type: object
+      properties:
+        date_updated:
+          type: string
+          description: The date the recording was last updated.
+          example: Wed, 11 Dec 2019 19:27:29 -0000
+        parent_call_sid:
+          type: string
+          description: The sid of the parent call.
+          example: CallSid
+        duration:
+          type: integer
+          description: The length of the recording in seconds.
+          example: 40
+        from:
+          type: string
+          description: The number that initiated the call.
+          example: "14166144164"
+        to:
+          type: string
+          description: The number that was called.
+          example: "14166144164"
+        caller_id_blocked:
+          type: string
+          description: Specifies whether the caller ID of the inbound phone number
+            was blocked.
+          example: "false"
+        answered_by:
+          type: string
+          description: If the initiated call has answering machine detection, this
+            specifies whether the machine answered. Can be "human", "machine" or "tbd"
+            (to be determined).
+          example: nobody
+        sid:
+          type: string
+          description: An alphanumeric string identifying this resource.
+          example: CallSid
+        recordings_count:
+          type: integer
+          description: The number of recordings made during this call.
+          example: 1
+        price:
+          type: string
+          description: The cost of the recording, if available.
+          example: "0.114250"
+        api_version:
+          type: string
+          description: The Api Version being used.
+          example: v2
+        status:
+          type: string
+          description: Status of the recording. May be in-progress, completed, or
+            failed.
+          example: completed
+        direction:
+          type: string
+          description: Direction of the recording. May be in, out, or both
+          example: both
+        start_time:
+          type: integer
+          description: The date and time the call started.
+        date_created:
+          type: integer
+          description: The date the recording was created.
+        subresource_uris:
+          $ref: '#/components/schemas/viewcall_subresource_uris'
+        forwarded_from:
+          type: string
+          description: The number that forwarded the call, if any.
+          example: "14166144164"
+        uri:
+          type: string
+          description: The uri pointing to this resource.
+          example: /Accounts/{AccountSid}/Calls/{CallSid}
+        account_sid:
+          type: string
+          description: An alphanumeric string identifying the account this call occurred
+            through.
+          example: AccountSid
+        duration_billed:
+          type: integer
+          description: The billed length of the recording in seconds.
+          example: 60
+        end_time:
+          type: string
+          description: The date and time the recording ended.
+          example: Wed, 11 Dec 2019 19:27:28 -0000
+        phone_number_sid:
+          type: string
+          description: The sid of the Avaya CPaaS number calling, or being called.
+            If no Avaya CPaaS phone number is involved in the call, this property
+            is empty.
+          example: DidSid
+    inline_response_200:
+      required:
+      - calls
+      - end
+      - first_page_uri
+      - last_page_uri
+      - next_page_uri
+      - num_pages
+      - page
+      - page_size
+      - previous_page_uri
+      - start
+      - total
+      - uri
+      type: object
+      properties:
+        first_page_uri:
+          type: string
+          description: URI for the first page of results.
+          example: /Accounts/{AccountSid}/Calls.json?Page=0&amp;PageSize=50
+        end:
+          type: integer
+          description: Last result index.
+          example: 3
+        total:
+          type: integer
+          description: Number of items.
+          example: 4
+        previous_page_uri:
+          type: string
+          description: URI for the previous page of results.
+          example: /Accounts/{AccountSid}/Calls.json?Page=0&amp;PageSize=50
+        num_pages:
+          type: integer
+          description: Number of pages.
+          example: 1
+        calls:
+          type: array
+          description: Array containing calls.
+          items:
+            $ref: '#/components/schemas/viewcall'
+        uri:
+          type: string
+          description: The Uniform Resource Identifier to this resource.
+          example: /Accounts/{AccountSid}/Calls.json
+        page_size:
+          type: integer
+          description: Number of items on a single page.
+          example: 50
+        start:
+          type: integer
+          description: Index of the first item on the current page.
+          example: 0
+        next_page_uri:
+          type: string
+          description: URI for the next page of the results.
+          example: /v2/Accounts/{AccountSid}/Calls.json?Page=1&PageSize=50
+        last_page_uri:
+          type: string
+          description: URI for the last page of the results.
+          example: /v2/Accounts/{AccountSid}/Calls.json?Page=1&PageSize=50
+        page:
+          type: integer
+          description: Current page number.
+          example: 0
+    inline_response_200_1:
+      required:
+      - end
+      - first_page_uri
+      - last_page_uri
+      - next_page_uri
+      - num_pages
+      - page
+      - page_size
+      - previous_page_uri
+      - sms_messages
+      - start
+      - total
+      - uri
+      type: object
+      properties:
+        page:
+          type: integer
+          description: Current page number.
+          example: 0
+        page_size:
+          type: integer
+          description: Number of items on a single page.
+          example: 50
+        num_pages:
+          type: integer
+          description: Number of pages.
+          example: 1
+        start:
+          type: integer
+          description: Index of the first item on the current page.
+          example: 0
+        total:
+          type: integer
+          description: Number of items.
+          example: 4
+        end:
+          type: integer
+          description: Last result index.
+          example: 3
+        uri:
+          type: string
+          description: The Uniform Resource Identifier to this resource.
+          example: /Accounts/{AccountSid}/SMS/Messages.json
+        first_page_uri:
+          type: string
+          description: URI for the first page of results.
+          example: /Accounts/{AccountSid}/SMS/Messages.json?Page=0&PageSize=50
+        last_page_uri:
+          type: string
+          description: URI for the last page of the results.
+          example: /Accounts/{AccountSid}/SMS/Messages.json?Page=1&PageSize=50
+        next_page_uri:
+          type: string
+          description: URI for the next page of the results.
+          example: /Accounts/{AccountSid}/SMS/Messages.json?Page=1&PageSize=50
+        previous_page_uri:
+          type: string
+          description: URI for the previous page of results.
+          example: /Accounts/{AccountSid}/SMS/Messages.json?Page=0&PageSize=50
+        sms_messages:
+          type: array
+          description: Array containing sms messages.
+          items:
+            $ref: '#/components/schemas/viewsms'
+    viewcall_subresource_uris:
+      type: object
+      properties:
+        notifications:
+          type: string
+          description: Uri of the corresponding notification.
+          example: /Accounts/{AccountSid}/Calls/{CallSid}/Notifications
+        recordings:
+          type: string
+          description: Uri of the corresponding recording.
+          example: /Accounts/{AccountSid}/Calls/{CallSid}/Recordings
+      description: List of a call's various subresources and their URL paths. Examples
+        of call subresources are notifications, recordings, etc.
+  responses:
+    listsms200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_200_1'
+    viewsms200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/viewsms'
+    listcalls200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_200'
+    viewcall200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/viewcall'
+    "400":
+      description: Bad Request
+    "401":
+      description: The supplied credentials, if any, are not sufficient to access
+        the resource.
+    "404":
+      description: The requested resource was not found
+    "500":
+      description: Internal server error.
+  parameters:
+    CallSid:
+      name: CallSid
+      in: path
+      description: |
+        Call Sid.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    AccSid:
+      name: AccountSid
+      in: path
+      description: |
+        Your Account Sid.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    MediaExt:
+      name: mediaTypeExtension
+      in: path
+      description: |
+        By default, Avaya's REST API returns XML. You may obtain CSV, JSON or XML by appending ".csv", ".json", or ".xml".
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        default: .xml
+        enum:
+        - .xml
+        - .json
+        - .csv
+    CallsTo:
+      name: To
+      in: query
+      description: |
+        Filter by a specific number calls were made to.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    CallsFrom:
+      name: From
+      in: query
+      description: |
+        Filter by a specific number calls were made from.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    CallsStatus:
+      name: Status
+      in: query
+      description: |
+        Filter by calls with the specified status. Allowed values are "ringing", "in-progress", "queued", "busy", "completed", "no-answer", and "failed".
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    CallsStartTime:
+      name: StartTime
+      in: query
+      description: |
+        Filter by all calls beginning on or from a certain date. Date range can be specified using inequalities like so, "StartTime>=YYYY-MM-DD".
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    CallsSipDomain:
+      name: SipDomain
+      in: query
+      description: |
+        Filter all calls that contain SipDomain in the source and destination address.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    Page:
+      name: Page
+      in: query
+      description: |
+        Used to return a particular page within the list.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: integer
+    PageSize:
+      name: PageSize
+      in: query
+      description: |
+        Used to specify the amount of list items to return per page.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: integer
+    MessageTo:
+      name: To
+      in: query
+      description: |
+        List all SMS sent to this number. The value does not have to be in any specific format.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    MessageFrom:
+      name: From
+      in: query
+      description: |
+        List all SMS sent from this number. The value does not have to be in any specific format.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    DateSentGt:
+      name: DateSent>
+      in: query
+      description: |
+        Lists all SMS messages sent in a date range. Set DateSent>= and DateSent<= in YYYY-MM-DD format.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    DateSentLt:
+      name: DateSent<
+      in: query
+      description: |
+        Lists all SMS messages sent in a date range. Set DateSent>= and DateSent<= in YYYY-MM-DD format.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    SmsSid:
+      name: SMSMessageSid
+      in: path
+      description: |
+        SMS message SID.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
