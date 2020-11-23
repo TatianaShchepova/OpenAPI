@@ -13,8 +13,8 @@ paths:
     get:
       tags:
       - Calls
-      summary: List all calls associated with your account or filter results
-      description: List Calls
+      summary: List Calls
+      description: List all calls associated with your account.
       parameters:
       - name: AccountSid
         in: path
@@ -121,8 +121,8 @@ paths:
     post:
       tags:
       - Calls
-      summary: Make a Call
-      description: Make Call
+      summary: Make Call
+      description: Initiate a call.
       parameters:
       - name: AccountSid
         in: path
@@ -173,8 +173,8 @@ paths:
     get:
       tags:
       - Calls
-      summary: View all information about a call
-      description: View Call
+      summary: View Call
+      description: View all information about a call.
       parameters:
       - name: AccountSid
         in: path
@@ -227,9 +227,9 @@ paths:
     post:
       tags:
       - Calls
-      summary: Either changes the status of the call or use DTMF tones to mimic button
-        presses
-      description: Interrupt/Send Digits to Live Call
+      summary: Interrupt/Send Digits to Live Call
+      description: Changes the status of the call or uses DTMF tones to mimic button
+        presses.
       parameters:
       - name: AccountSid
         in: path
@@ -289,8 +289,8 @@ paths:
     post:
       tags:
       - Calls
-      summary: Options include restricting to one caller and looping
-      description: Play Audio to Live Call
+      summary: Play Audio to Live Call
+      description: Plays audio during a live call.
       parameters:
       - name: AccountSid
         in: path
@@ -350,8 +350,8 @@ paths:
     post:
       tags:
       - Calls
-      summary: Applies voice effect on the call
-      description: Apply Voice Effect
+      summary: Apply Voice Effect
+      description: Applies a voice effect to a call.
       parameters:
       - name: AccountSid
         in: path
