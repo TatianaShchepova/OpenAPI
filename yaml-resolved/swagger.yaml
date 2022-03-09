@@ -6,7 +6,7 @@ info:
     go! Getting started with Avaya OneCloud CPaaS is easy.
   version: 2.0.3
 servers:
-- url: https://api.zang.io/v2
+- url: https://api.zangsandbox.com/v2
   description: Production server
 paths:
   /Accounts/{AccountSid}/Calls{mediaTypeExtension}:
