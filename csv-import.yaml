@@ -1,0 +1,68 @@
+openapi: 3.0.0
+info:
+  title: Number Import via CSV
+  description: >-
+    [Private] Allows importing of numbers specified in the csv payload into
+    Cpaas numbers inventory.
+  version: 1.0.0
+servers:
+  - url: https://api-us.cpaas.avayacloud.com/v2
+    description: Production server
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+security:
+  - basicAuth: []
+paths:
+  /Accounts/{AccountSid}/Numbers/Import{mediaTypeExtension}:
+    post:
+      tags:
+        - Numbers
+      summary: Import number from csv
+      description: Import numbers defined in the payload csv into Cpaas numbers inventory
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                importCSV:
+                  type: string
+      security:
+        - basicAuth: []
+      parameters:
+        - name: mediaTypeExtension
+          in: path
+          description: |
+            By default, Avaya's REST API returns XML. You may obtain CSV, JSON or XML by appending ".csv", ".json", or ".xml".
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            default: .json
+            enum:
+            - .xml
+            - .json
+            - .csv
+        - name: Import-Key
+          in: header
+          description: API key for performing the import operation. Can be configured as an environmental variable.
+          schema:
+            type: string
+        - name: AccountSid
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal server error.
