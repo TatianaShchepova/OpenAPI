@@ -6,7 +6,7 @@ info:
     Cpaas numbers inventory.
   version: 1.0.0
 servers:
-  - url: https://api.zang.io/v2
+  - url: https://api-us.cpaas.avayacloud.com/v2
     description: Production server
 components:
   securitySchemes:
